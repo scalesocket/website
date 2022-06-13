@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/base16/harmonic16-dark.min.css">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/base16/harmonic16-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css"
         integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
 </head>
 
-<body>
-    <div id="app" class=" max-w-6xl flex flex-col min-h-screen font-roboto dark:bg-gray-900 mx-auto">
+<body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
+    <div id="app" class=" max-w-6xl flex flex-col min-h-screen font-roboto mx-auto">
         <header>
             <nav
-                class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap px-6 py-4 sm:p-6 border-gray-100 border-b">
+                class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap px-6 py-4 sm:p-6 border-gray-100 dark:border-gray-600 border-b">
                 <div class="flex px-4 items-center shrink-0 text-white md:mr-6 text-teal-500 ">
                     <img src="assets/image.svg" class="fill-current h-8 w-8 mr-2" alt="ScaleSocket">
                     <span class="text-xl ml-2 tracking-tight"><strong>Scale</strong>Socket</span>
@@ -23,13 +24,13 @@
                 <div class="w-full block sm:grow flex items-center justify-start w-auto">
                     <nav class="w-full block grow flex items-center w-auto">
                         <a href="index.html"
-                            class="rounded-lg px-3 py-2 text-slate-700 font-bold hover:bg-slate-100 hover:text-slate-900">About</a>
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">About</a>
                         <a href="docs.html"
-                            class="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900">Docs</a>
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Docs</a>
                     </nav>
                     <div>
                         <a href="https://github.com/scalesocket"
-                            class="inline-block rounded-lg px-3 py-2 text-slate-700 font-medium hover:text-slate-900"><i
+                            class="inline-block rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:text-slate-900  dark:hover:text-slate-400"><i
                                 class="fa fa-github fa-lg"></i> <span class="hidden sm:inline">Github</span></a>
                     </div>
                 </div>
@@ -53,31 +54,34 @@
         </section>
         <section id="features">
             <div class="m-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                <div class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3">
+                <div
+                    class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3 dark:bg-slate-800">
                     <div class="shrink-0">
                         <i class="fa fa-tachometer fa-lg" style="color:#0891B2"></i>
                     </div>
                     <div>
-                        <div class="text-xl font-medium text-cyan-600">Fast</div>
-                        <p class="text-slate-500">Written with performance in mind</p>
+                        <div class="text-xl font-medium text-cyan-600 dark:text-cyan-400">Fast</div>
+                        <p class="text-slate-500 dark:text-slate-400">Written with performance in mind</p>
                     </div>
                 </div>
-                <div class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3">
+                <div
+                    class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3 dark:bg-slate-800">
                     <div class="shrink-0">
                         <i class="fa fa-battery-full fa-lg" style="color:#0891B2"></i>
                     </div>
                     <div>
-                        <div class="text-xl font-medium text-cyan-600">Simple</div>
-                        <p class="text-slate-500">Follows the unix philosophy!</p>
+                        <div class="text-xl font-medium text-cyan-600 dark:text-cyan-400">Simple</div>
+                        <p class="text-slate-500 dark:text-slate-400">Follows the unix philosophy!</p>
                     </div>
                 </div>
-                <div class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3">
+                <div
+                    class="p-4 lg:p-6 bg-white rounded-xl shadow-lg flex grow items-center space-x-4 w-1/1 md:w-1/3 dark:bg-slate-800">
                     <div class="shrink-0">
                         <i class="fa fa-code fa-lg" style="color:#0891B2"></i>
                     </div>
                     <div>
-                        <div class="text-xl font-medium text-cyan-600">Open source</div>
-                        <p class="text-slate-500">And we're not a startup</p>
+                        <div class="text-xl font-medium text-cyan-600 dark:text-cyan-400">Open source</div>
+                        <p class="text-slate-500 dark:text-slate-400">And we're not a startup</p>
                     </div>
                 </div>
             </div>
@@ -88,16 +92,33 @@
                     Built to do one thing, so you don't have to.</h1>
                 <p class="mt-4 md:w-2/3">ScaleSocket wraps your existing application or script to serve sessions
                     to multiple clients. It simplifies your application so you don't have to worry about
-                    load-balancing, lobby-servers, sticky routing, rate-limiting, long-lived-connections or scaling the backend.</p>
+                    load-balancing, lobby-servers, sticky routing, rate-limiting, long-lived-connections or scaling the
+                    backend.</p>
             </div>
             <div class="m-6">
                 <h1 class="mt-4 text-xl sm:text-2xl text-cyan-600 font-bold tracking-tight">
                     For a new generation of web apps.</h1>
                 <p class="mt-4 md:w-2/3">
                     Collaborative web apps and games need rapid state updates. Websockets can be fast, but also require
-                    a very different backend, not based on request and response. We believe that applicaitons shouldn't have to bend and form to the transportation medium. By moving the transportatin and scaling concerns outside the application, you can write simpler backends &mdash; that scale.
+                    a very different backend, not based on request and response. We believe that applicaitons shouldn't
+                    have to bend and form to the transportation medium. By moving the transportatin and scaling concerns
+                    outside the application, you can write simpler backends &mdash; that scale.
                 </p>
-                <p class="mt-2">
+            </div>
+            <div class="m-6">
+                <h1 class="mt-4 text-xl sm:text-2xl text-cyan-600 font-bold tracking-tight">How it works.</h1>
+                <p class="mt-4 md:w-2/3">
+                    Scalesocket accepts websocket connections and starts an instances of the backend. The backend can be
+                    any executable file. It then forwards messages between clients and the backend using a single
+                    channel.
+                    This channel may be stdio or a tcp stream.
+                </p>
+                <p class="mt-2">The following diagram illustrates the operation:</p>
+                <pre class="my-4 overflow-x-auto rounded-xl bg-slate-100 dark:bg-slate-800 p-2 inline-block mx-auto text-xs md:text-base">client <---->
+client <-ws-> scalesocket <---> backend
+client <----></pre>
+            </div>
+            <div class="m-6">
                 <h1 class="mt-4 text-xl sm:text-2xl text-sky-600 font-bold tracking-tight">
                     Example use cases.</h1>
                 <p class="mt-4 md:w-2/3">ScaleSocket is useful in real-time browser applications. For example:</p>
@@ -108,7 +129,6 @@
                     <li>CLI first web-apps<sup>*</sup></li>
                     <li>Hosting serverless solutions</li>
                 </ul>
-                </p>
             </div>
         </section>
         <section id="demo">
@@ -119,26 +139,20 @@
                 <p class="text-xl text-cyan-600">Online collaborative docs-like app. In 50 lines of vanilla Python.</p>
             </div>
             <div class="relative pt-10 xl:pt-0 mt-10 xl:mt-2">
-                <div
-                    class="hidden dark:block absolute top-0 inset-x-0 h-[37.5rem] bg-gradient-to-b from-[#0c1120] top-0 xl:top-8">
-                </div>
-                <div class="absolute top-0 inset-x-0 bg-top bg-no-repeat GridLockup_beams-0__2DHRo top-0 xl:top-8">
-                </div>
-                <div
-                    class="absolute top-0 inset-x-0 h-[37.5rem] bg-grid-slate-900/[0.04] bg-top [mask-image:linear-gradient(0deg,transparent,black)] dark:bg-grid-slate-100/[0.03] dark:bg-[center_top_-1px] dark:border-t dark:border-slate-100/5 top-0 xl:top-8">
-                </div>
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
                     <div class="lg:col-span-5 xl:col-span-6 flex flex-col">
                         <div
-                            class="h-full relative z-10 bg-white ring-1 ring-slate-900/5 rounded-lg shadow-xl px-6 py-5 my-auto xl:mt-18 dark:bg-slate-800">
-                            <iframe src="https://demo.scalesocket.org/demo" allowfullscreen="" class="w-full h-full flex" style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>
+                            class="h-full relative z-10 ring-1 ring-slate-900/5 rounded-lg shadow-xl px-6 py-5 my-auto xl:mt-18 dark:bg-slate-700">
+                            <iframe src="https://demo.scalesocket.org/demo" allowfullscreen=""
+                                class="w-full h-full flex bg-slate-100"
+                                style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="mt-4 -mx-4 sm:mx-0 lg:mt-0 lg:col-span-7 xl:col-span-6">
                         <div
                             class="relative overflow-hidden shadow-xl flex bg-slate-800 h-[31.625rem] max-h-[60vh] sm:max-h-[none] sm:rounded-xl lg:h-[34.6875rem] xl:h-[31.625rem] dark:bg-slate-900/70 dark:backdrop-blur dark:ring-1 dark:ring-inset dark:ring-white/10">
                             <div class="relative w-full flex flex-col">
-                                <div class="flex-none border-b border-slate-500/30">
+                                <div class="flex-none border-b border-slate-500/30 dark:bg-slate-700">
                                     <div class="flex items-center h-8 space-x-1.5 px-3">
                                         <div class="w-2.5 h-2.5 bg-slate-600 rounded-full"></div>
                                         <div class="w-2.5 h-2.5 bg-slate-600 rounded-full"></div>
@@ -149,7 +163,7 @@
                                     <div class="w-full flex-auto flex min-h-0" style="opacity: 1;">
                                         <div class="w-full flex-auto flex min-h-0 overflow-auto">
                                             <div class="w-full relative flex-auto">
-                                                <pre class="flex min-h-full text-xs md:text-xs-2 language-python"><code class="flex-auto relative block text-slate-400 overflow-auto p-4">#! /usr/bin/python3
+                                                <pre class="flex min-h-full text-xs md:text-xs-2 language-python"><code class="flex-auto relative block text-slate-400 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">#! /usr/bin/python3
 from dataclasses import dataclass
 from json import loads as parse_json, dumps
 from sys import stdin, stdout
@@ -215,7 +229,7 @@ if __name__ == "__main__":
             </div>
         </section>
         <script>hljs.highlightAll();</script>
-        <footer class="text-gray-400 border-gray-100 border-t mt-6">
+        <footer class="text-gray-400 border-gray-100 dark:border-gray-600 border-t mt-6">
             <div class="text-center p-6">
                 © 2022 &mdash; ScaleSocket &mdash; Made in the EU
             </div>
