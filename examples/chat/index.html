@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Chat Demo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/base16/harmonic16-dark.min.css">
+</head>
+
+<body>
+    <div id="chat" class="mx-auto max-w-3xl flex flex-col h-screen">
+        <div class="bg-slate-100 text-center pt-1 text-gray-400 text-xs">Powered by ScaleSocket</div>
+        <div class="p-2 flex grow bg-slate-100 overflow-x-scroll" id="messages"></div>
+        <div class="p-1 flex flex-row bg-slate-200">
+            <input name="nick" placeholder="nick" class="flex flex-initial min-w-0 rounded-xl p-1 m-2"
+                value="anonymous" />
+            <input name="message" placeholder="message..." class="flex grow rounded-xl p-1 m-2" />
+        </div>
+    </div>
+    <script>
+        const $ = document.querySelector.bind(document);
+        const ws = new WebSocket('wss://demo.scalesocket.org/chat');
+
+        const sendMessage = (text) => {
+            const nick = $("input[name=nick]").value || "anonymous";
+            ws.send(JSON.stringify({ nick, text }));
+        }
+
+        const recvMessage = (message) => {
+            const el = $("#messages")
+            el.appendChild(document.createTextNode(`<${message.nick}> ${message.text}`));
+            el.appendChild(document.createElement('br'));
+            el.scrollTop = el.scrollHeight;
+        }
+
+        const init = () => {
+            // set websocket listener
+            ws.addEventListener('message', (ev) => {
+                const message = JSON.parse(ev.data);
+                recvMessage(message);
+            });
+
+            // set input listener
+            $("input[name=message]").addEventListener('keyup', ({ key, target }) => {
+                if (key === 'Enter') {
+                    sendMessage(target.value);
+                    target.value = "";
+                    target.focus();
+                }
+            });
+
+            // set input focus
+            $("input[name=message]").focus();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
