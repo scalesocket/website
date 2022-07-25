@@ -137,18 +137,20 @@ client <----></pre>
                 <h1
                     class="pb-2 text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600">
                     What does it look like? Here's a live Demo.</h1>
-                <p class="text-xl text-cyan-600">Online collaborative docs-like app. In 50 lines of vanilla Python.</p>
+                <p class="text-xl text-cyan-600">Online multiplayer game server. In 50 lines of vanilla Python.</p>
             </div>
             <div class="relative pt-10 xl:pt-0 mt-10 xl:mt-2">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:grid lg:grid-cols-12 lg:gap-8">
+                    <!--demo-->
                     <div class="lg:col-span-5 xl:col-span-6 flex flex-col">
                         <div
                             class="h-full relative z-10 ring-1 ring-slate-900/5 rounded-lg shadow-lg dark:shadow-cyan-600/10  px-6 py-5 my-auto xl:mt-18 dark:bg-slate-700">
-                            <iframe src="https://demo.scalesocket.org/demo" allowfullscreen=""
+                            <iframe src="https://demo.scalesocket.org/" allowfullscreen=""
                                 class="w-full h-full flex bg-slate-100"
                                 style="border: 1px solid #e4e4e4;border-radius: 4px;" frameborder="0"></iframe>
                         </div>
                     </div>
+                    <!--windows-->
                     <div class="mt-4 -mx-4 sm:mx-0 lg:mt-0 lg:col-span-7 xl:col-span-6">
                         <div
                             class="relative overflow-hidden flex bg-slate-800 h-[21.625rem] max-h-[60vh] sm:max-h-[none] sm:rounded-xl lg:h-[24.6875rem] xl:h-[21.625rem] dark:bg-slate-900/70 dark:backdrop-blur dark:ring-1 dark:ring-inset dark:ring-white/10">
@@ -165,54 +167,52 @@ client <----></pre>
                                         <div class="w-full flex-auto flex min-h-0 overflow-auto">
                                             <div class="w-full relative flex-auto">
                                                 <pre class="flex min-h-full text-xs md:text-xs-2 language-python"><code class="flex-auto relative block text-slate-400 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">#! /usr/bin/python3
-from dataclasses import dataclass
-from json import loads as parse_json, dumps
+from contextlib import suppress
+from dataclasses import dataclass, field
+from json import JSONDecodeError, loads, dumps
 from sys import stdin, stdout
-from typing import List, Dict
+from operator import itemgetter
 
 def main():
-    state = State(ids=[0], content={0: "Hello Docs!"})
-
-    while True:
+    state = State()
+    # parse incoming events from stdin
+    for event in map(parse_json, stdin):
         try:
-            msg = parse_json(next(stdin))
-            state.handle_op(msg)
+            state.handle_event(event)
         except Exception as err:
+            # on error, send error to client by printing
             print(dumps({"error": err.__class__.__name__}))
         else:
-            # send state to client by printing it
-            print(dumps(state.__dict__)) 
+            # on succes, send state to client by printing
+            print(dumps({"op": "state", "data": state.__dict__}))
 
 @dataclass
 class State:
-    ids: List[int]
-    content: Dict[int, str]
-    user_count: int = 0
+    players: dict = field(default_factory=dict)
 
-    def handle_op(self, msg: dict):
-        op, id, val = (msg.get("op"), msg.get("id"),
-                       msg.get("val"))
-        getattr(self, op)(id, val)
+    def handle_event(self, ev: dict):
+        ev = {"op": None, "id": None, "data": None, **ev}
+        op, id, data = itemgetter("op", "id", "data")(ev)
+        getattr(self, op)(id, data)
 
-    def join(self, *_):
-        self.user_count += 1
+    def input(self, id: int, data: dict):
+        pos = (data.get("x", 0), data.get("y", 0))
+        self.players[id] = pos
 
-    def leave(self, *_):
-        self.user_count -= 1
+    def join(self, id: int, data: None):
+        # send join info to clients
+        print(dumps({"op": "join", "data": id}))
+        self.players[id] = (50, 50)
 
-    def insert_after(self, id: int, val: str):
-        new_id = max(self.ids) + 1
-        self.ids.insert(self.ids.index(id) + 1, new_id)
-        self.content[new_id] = val
-    
-    def remove(self, id: int, *_):
-        if id in self.ids:
-            self.ids.remove(id)
-            del self.content[id]
+    def leave(self, id: int, data: None):
+        # inform clients about leave
+        print(dumps({"op": "leave", "data": id}))
+        del self.players[id]
 
-    def update(self, id: int, val: str):
-        if id in self.ids:
-            self.content[id] = val
+def parse_json(data):
+    with suppress(JSONDecodeError):
+        return loads(data)
+    return None
 
 if __name__ == "__main__":
     # ensure python output is not buffered
@@ -225,7 +225,6 @@ if __name__ == "__main__":
                                 </div>
                             </div>
                         </div>
-                        <!---->
                         <div
                             class="mt-4 relative overflow-hidden shadow-lg dark:shadow-cyan-600/10 flex bg-slate-800 h-[6rem] max-h-[60vh] sm:max-h-[none] sm:rounded-xl lg:h-[6rem] xl:h-[6rem] dark:bg-slate-900/70 dark:backdrop-blur dark:ring-1 dark:ring-inset dark:ring-white/10">
                             <div class="relative w-full flex flex-col">
@@ -240,7 +239,7 @@ if __name__ == "__main__":
                                     <div class="w-full flex-auto flex min-h-0" style="opacity: 1;">
                                         <div class="w-full flex-auto flex min-h-0 overflow-auto">
                                             <div class="w-full relative flex-auto">
-                                                <pre class="flex min-h-full text-xs md:text-xs-2 language-shell"><code class="flex-auto relative block text-slate-300 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ scalesocket --addr 0.0.0.0:5000 ./chat.py
+                                                <pre class="flex min-h-full text-xs md:text-xs-2 language-shell"><code class="flex-auto relative block text-slate-300 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ scalesocket --addr 0.0.0.0:5000 ./game.py
 [INFO] running at 0.0.0.0 on port 5000
 </code></pre>
                                             </div>
@@ -249,7 +248,6 @@ if __name__ == "__main__":
                                 </div>
                             </div>
                         </div>
-                        <!---->
                     </div>
                 </div>
             </div>
