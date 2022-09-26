@@ -95,28 +95,32 @@
             <div class="m-6">
                 <h1 class="mt-4 text-xl sm:text-2xl text-teal-500 font-bold tracking-tight">
                     Built to do one thing, so you don't have to.</h1>
-                <p class="mt-4 md:w-2/3">ScaleSocket wraps your existing application or script to serve websocket
-                    sessions
-                    to multiple clients. It simplifies your application so you don't have to worry about
-                    load-balancing, lobby-servers, sticky routing, rate-limiting, long-lived-connections or scaling the
-                    backend.</p>
+                <p class="mt-4 md:w-2/3">Scalesocket is a server and autoscaler. It servers your application via
+                    websockets and scales the number of instances based on the number of connections.
+
+                    The main use-case of ScaleSocket is to <i>vastly simplify the structure of realtime web apps</i> and
+                    games by moving
+                    the connection management and scaling outside the application code.</p>
             </div>
             <div class="m-6">
                 <h1 class="mt-4 text-xl sm:text-2xl text-cyan-600 font-bold tracking-tight">
                     For a new generation of web apps.</h1>
                 <p class="mt-4 md:w-2/3">
-                    Collaborative web apps and games need rapid state updates. Websockets can be fast, but also require
-                    a very different backend, not based on request and response. We believe that applicaitons shouldn't
-                    have to bend and form to the transportation medium. By moving the transportatin and scaling concerns
-                    outside the application, you can write simpler backends &mdash; that scale.
+                    Running a process per session is usable in multiplayer games and collaborative web apps. For example
+                    <a href="https://www.figma.com/blog/rust-in-production-at-figma/" class="text-cyan-600">Figma</a> is
+                    using
+                    this approach to serve the backend for their collaborative web app. It is reminiscient of <a
+                        href="https://en.wikipedia.org/wiki/FastCGI" class="text-cyan-600">FastCGI</a>, but some of the
+                    needs of collaborative apps differ from traditional CGI.
+                    For example, ScaleSocket allows multiple clients to share a backend process.
                 </p>
             </div>
             <div class="m-6">
                 <h1 class="mt-4 text-xl sm:text-2xl text-cyan-600 font-bold tracking-tight">How it works.</h1>
                 <p class="mt-4 md:w-2/3">
-                    Scalesocket accepts websocket connections to rooms and spawns a backend processes for each room. The
-                    backend is a server script or any executable file. It forwards messages between clients and the
-                    backend process using a single
+                    Scalesocket listens for websocket connections with a room parameter and spawns a backend processes
+                    for each room. The backend is an executable script or file. ScaleSocket then forwards messages
+                    between clients and the backend process using a single
                     channel. The channel may be standard input/output or a TCP stream.
                 </p>
             </div>
@@ -125,7 +129,7 @@
                 <img class="max-w-full h-auto rounded-lg" src="assets/diagram.svg"
                     alt="ScaleSocket high level architecture diagram">
                 <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">High level architecture
-                    diagram. Scalesocket accepts websocket connections and spawns backend processes running server code.
+                    diagram. Scalesocket listens for websocket connections and spawns backend processes.
                     Clients in a room share the backend process.</figcaption>
                 </figure>
             </div>
