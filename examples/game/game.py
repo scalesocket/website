@@ -1,4 +1,4 @@
-#! /usr/bin/python3
+#!/usr/bin/python3
 from contextlib import suppress
 from json import JSONDecodeError, loads, dumps
 from sys import stdin, stdout
