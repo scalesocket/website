@@ -7,6 +7,7 @@ COPY index.html game.js bunny.png /var/www/public/
 COPY game.py .
 
 CMD scalesocket --addr 0.0.0.0:5000 --staticdir /var/www/public/\
-    --joinmsg '{"op":"join","id":"%ID"}'\
-    --leavemsg '{"op":"leave","id":"%ID"}'\
+    --frame=json\
+    --joinmsg '{"op":"join","id":"#ID"}'\
+    --leavemsg '{"op":"leave","id":"#ID"}'\
     ./game.py

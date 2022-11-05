@@ -3,14 +3,8 @@ export class Game {
         this.app = app;
         this.ws = ws;
         this.resources = resources;
-        this.id = null; // this is our client ID
         this.events = new EventEmitter(ws);
         this.state = new GameState(this.app.stage, resources);
-
-        // Listen for our client ID once
-        this.events.addEventListener('server.join', async (event) => {
-            this.id = event.detail;
-        }, { once: true });
     }
 
     async init() {
@@ -59,7 +53,7 @@ export class Game {
     }
 
     send(op, data = {}) {
-        this.ws.send(JSON.stringify({ op, data, id: this.id }));
+        this.ws.send(JSON.stringify({ op, data }));
     }
 }
 

@@ -36,6 +36,7 @@
         })
 
         void resources.load().then(async (resources) => {
+            // const ws = new WebSocket('ws://localhost:5000/game');
             const ws = new WebSocket('wss://demo.scalesocket.org/game');
             const game = new Game(app, ws, resources);
             await game.init();
