@@ -5,7 +5,7 @@ from typing import Optional
 from sys import stderr
 
 PLAYER_HEALTH = 2
-EXPLOSION_ENERGY = 5
+EXPLOSION_ENERGY = 10
 EXPLOSIVE_TTL = 12
 WALL_EMPTY = 0
 WALL_SOFT = 1
@@ -199,7 +199,14 @@ class State:
 
     def _update_round(self):
         live_players = list(filter(lambda p: p.health > 0, self.players.values()))
-        is_round_end = len(live_players) == 0
+        total_players = len(self.players.values())
+
+        if total_players > 1:
+            is_round_end = len(live_players) == 1
+        elif total_players == 1:
+            is_round_end = len(live_players) == 0
+        else:
+            is_round_end = False
 
         if is_round_end:
             for player in self.players.values():
