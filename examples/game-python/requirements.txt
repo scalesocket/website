@@ -1,0 +1,2 @@
+aioconsole==0.5.1
+vector-2d==1.5.2

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Game Demo</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://pixijs.download/v7.0.0/pixi.min.js"></script>
+    <!-- <script src="https://pixijs.download/v7.0.0/pixi.js"></script> -->
+    <script type="module" src="./game.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="h-screen max-h-screen max-w-screen overflow-hidden">
+
+    <div class="flex flex-col w-full h-full bg-gray-50 dark:bg-gray-700">
+        <div class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
+            <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
+                <div class="flex items-center space-x-1 sm:pr-4">
+                    <span id="usercount" class="text-gray-500 text-xs">Offline</span>
+                </div>
+                <div class="flex flex-wrap items-center space-x-1 pl-4">
+                    <span class="text-gray-400 text-xs">Powered by ScaleSocket</span>
+                </div>
+            </div>
+            <div class="flex grow justify-end">
+                <select name="room" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-1"
+                    onchange="window.location.href = window.location.href.split( '#' )[0] + (this.options[this.selectedIndex].value); window.location.reload();">
+                    <option value="#room1">Room1</option>
+                    <option value="#room2">Room 1</option>
+                    <option value="#room3">Room 2</option>
+                    <option value="#room4">Room 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="flex content-center justify-center items-center">
+            <canvas id="canvas" class="max-h-full max-w-full object-contain"></canvas>
+        </div>
+    </div>
+    <script type="module">
+        import { Game } from "./game.js";
+        const app = new PIXI.Application({ width: 352, height: 352, view: document.querySelector('#canvas'), autoDensity: true });
+
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        PIXI.Assets.addBundle('default', { 'assets': 'assets.png' });
+
+        void PIXI.Assets.loadBundle('default').then(async (resources) => {
+            const room = window.location.hash.substring(1) || "room1";
+            // const ws = new WebSocket(`ws://localhost:5000/${room}`);
+            const ws = new WebSocket(`wss://game-python.scalesocket.org/${room}`);
+            const game = new Game(app, ws, resources);
+            await game.init();
+        });
+
+    </script>
+</body>
+
+</html>
