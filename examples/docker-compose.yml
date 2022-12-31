@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  chat:
+    build:
+      context: chat/
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./chat/:/var/www/public
+      - ./chat/:/app/
+
+  game:
+    build:
+      context: game/
+    volumes:
+      - ./game/:/var/www/public
+      - ./game/:/app/
+    ports:
+      - "5000:5000"
