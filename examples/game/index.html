@@ -5,13 +5,15 @@
     <title>Game Demo</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://pixijs.download/release/pixi.min.js"></script>
+    <script src="https://pixijs.download/v7.0.0/pixi.min.js"></script>
+    <!-- <script src="https://pixijs.download/v7.0.0/pixi.js"></script> -->
     <script type="module" src="./game.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
 </head>
 
 <body class="h-screen max-h-screen max-w-screen overflow-hidden">
+
     <div class="flex flex-col w-full h-full bg-gray-50 dark:bg-gray-700">
         <div class="flex justify-between items-center py-2 px-3 border-b dark:border-gray-600">
             <div class="flex flex-wrap items-center divide-gray-200 sm:divide-x dark:divide-gray-600">
@@ -28,16 +30,15 @@
         </div>
     </div>
     <script type="module">
-        import { Game, Resources } from "./game.js";
-        const app = new PIXI.Application({ width: 480, height: 480, view: document.querySelector('#canvas') });
+        import { Game } from "./game.js";
+        const host = window.location.host.startsWith("localhost") ? "ws://localhost:5000/game" : 'wss://demo.scalesocket.org/game';
+        const app = new PIXI.Application({ width: 480, height: 480, view: document.querySelector('#canvas'), autoDensity: true });
 
-        const resources = new Resources({
-            'bunny': 'bunny.png',
-        })
+        PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
+        PIXI.Assets.addBundle('default', { 'bunny': 'bunny.png' });
 
-        void resources.load().then(async (resources) => {
-            // const ws = new WebSocket('ws://localhost:5000/game');
-            const ws = new WebSocket('wss://demo.scalesocket.org/game');
+        void PIXI.Assets.loadBundle('default').then(async (resources) => {
+            const ws = new WebSocket(host);
             const game = new Game(app, ws, resources);
             await game.init();
         });

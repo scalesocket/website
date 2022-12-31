@@ -20,14 +20,17 @@
     </div>
     <script>
         const $ = document.querySelector.bind(document);
-        const ws = new WebSocket('wss://demo.scalesocket.org/chat');
+        const host = window.location.host.startsWith("localhost") ? "ws://localhost:5000/chat" : 'wss://demo.scalesocket.org/chat';
+        const ws = new WebSocket(host);
 
         const sendMessage = (text) => {
+            // send outgoing message
             const nick = $("input[name=nick]").value || "anonymous";
             ws.send(JSON.stringify({ nick, text }));
         }
 
         const recvMessage = (message) => {
+            // handle incoming message
             const el = $("#messages")
             el.appendChild(document.createTextNode(`<${message.nick}> ${message.text}`));
             el.appendChild(document.createElement('br'));

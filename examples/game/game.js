@@ -45,7 +45,7 @@ export class Game {
         // Listen to clicks
         this.app.stage.interactive = true;
         this.app.stage.on('pointerdown', (e) => {
-            this.events.emit('pointerdown', e.data.getLocalPosition(this.app.stage));
+            this.events.emit('pointerdown', e.global);
         });
 
         // Interpolate sprite positions on every tick
@@ -94,7 +94,7 @@ class GameState {
 
     _addPlayer(id, pos) {
         const [x, y] = pos;
-        const sprite = new PIXI.Sprite(this.resources.bunny.texture);
+        const sprite = new PIXI.Sprite(new PIXI.Texture(this.resources.bunny.baseTexture));
         sprite.anchor.set(0.5);
         sprite.x = x;
         sprite.y = y;
@@ -131,25 +131,5 @@ class EventEmitter extends EventTarget {
 
     emit(op, data = {}, prefix = 'client') {
         this.dispatchEvent(new CustomEvent(`${prefix}.${op}`, { detail: data }));
-    }
-
-}
-
-export class Resources {
-    constructor(resources) {
-        this.loader = new PIXI.Loader();
-        Object.entries(resources).forEach(([key, url]) => this.loader.add(key, url));
-    }
-
-    async load() {
-        return new Promise((resolve, reject) => {
-            this.loader.load((loader, resources) => {
-                if (Object.values(resources).some((v) => v.error)) {
-                    reject("could not load resources")
-                } else {
-                    resolve(resources);
-                }
-            })
-        })
     }
 }

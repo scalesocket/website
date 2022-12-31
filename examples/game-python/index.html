@@ -47,8 +47,9 @@
 
         void PIXI.Assets.loadBundle('default').then(async (resources) => {
             const room = window.location.hash.substring(1) || "room1";
-            // const ws = new WebSocket(`ws://localhost:5000/${room}`);
-            const ws = new WebSocket(`wss://game-python.scalesocket.org/${room}`);
+            const host = window.location.host.startsWith("localhost") ? "ws://localhost:5000" : 'wss://demo.scalesocket.org';
+            const ws = new WebSocket(`${host}/${room}`);
+
             const game = new Game(app, ws, resources);
             await game.init();
         });

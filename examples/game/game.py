@@ -1,10 +1,12 @@
 #!/usr/bin/python3
 from contextlib import suppress
 from json import JSONDecodeError, loads, dumps
-from sys import stdin, stdout
+from sys import stdin, stdout, stderr
 
 
 def main():
+    print("game server started", file=stderr)
+
     stdin_events = map(parse_json, stdin)
     players = {}
 
