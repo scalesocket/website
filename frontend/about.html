@@ -18,7 +18,7 @@
 </head>
 
 <body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
-    <div id="app" class=" max-w-6xl flex flex-col min-h-screen font-roboto mx-auto">
+    <div id="app" class="max-w-6xl flex flex-col min-h-screen font-roboto mx-auto">
         <header>
             <nav
                 class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap px-6 py-4 sm:p-6 border-gray-100 dark:border-gray-600 border-b">
@@ -32,6 +32,8 @@
                             class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Home</a>
                         <a href="about.html"
                             class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">About</a>
+                        <a href="docs.html"
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Docs</a>
                     </nav>
                     <div>
                         <a href="https://github.com/scalesocket/scalesocket"
@@ -49,15 +51,9 @@
                 <div class="md:w-2/3 space-y-2">
                     <h1 class="text-2xl font-bold text-teal-500" id="what">What is ScaleSocket?</h1>
                     <p>Scalesocket is a websocket server and autoscaler. It servers your application via websockets and
-                        scales the number of instances based on the number of connections.
+                        scales the number of instances based on the number of connections.</p>
                     <p>The main use-case of ScaleSocket is to vastly <i>simplify the structure of realtime web apps</i>
                         by moving the connection management and scaling outside the application code.</p>
-                    <h1 class="text-2xl font-bold text-teal-500" id="getting-started">Getting started.</h1>
-                    <p>
-                        Right now there is supporting material or documentation, but there are a few <a
-                            href="https://github.com/scalesocket/website/tree/main/examples"
-                            class="text-cyan-600">examples</a>.
-                    </p>
                 </div>
             </div>
         </section>
@@ -367,8 +363,8 @@
                 </div>
                 <p>Also some servers, such as NGINX and Caddy support spawning processes and CGI with plugins.</p>
             </div>
+        </section>
     </div>
-    </section>
     <footer class="text-gray-400 border-gray-100 dark:border-gray-600 border-t mt-6">
         <div class="text-center p-6">
             © 2023 &mdash; ScaleSocket &mdash; Made in the EU

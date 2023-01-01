@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ScaleSocket - Documentation</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="manifest" href="/assets/site.webmanifest">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/base16/harmonic16-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css"
+        integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
+</head>
+
+<body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
+    <div id="app" class="max-w-6xl flex flex-col min-h-screen font-roboto mx-auto">
+        <header>
+            <nav
+                class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap px-6 py-4 sm:p-6 border-gray-100 dark:border-gray-600 border-b">
+                <div class="flex px-4 items-center shrink-0 text-white md:mr-6 text-teal-500 ">
+                    <img src="assets/image.svg" class="fill-current h-8 w-8 mr-2" alt="ScaleSocket">
+                    <span class="text-xl ml-2 tracking-tight"><strong>Scale</strong>Socket</span>
+                </div>
+                <div class="w-full block sm:grow flex items-center justify-start w-auto">
+                    <nav class="w-full block grow flex items-center w-auto">
+                        <a href="index.html"
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Home</a>
+                        <a href="about.html"
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">About</a>
+                        <a href="docs.html"
+                            class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-bold hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Docs</a>
+                    </nav>
+                    <div>
+                        <a href="https://github.com/scalesocket/scalesocket"
+                            class="inline-block rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:text-slate-900  dark:hover:text-slate-400"><i
+                                class="fa fa-github fa-lg"></i> <span class="hidden sm:inline">Github</span></a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <section id="introduction">
+            <div class="m-6 md:space-x-6 flex flex-row justify-center flex-wrap md:flex-nowrap">
+                <h1 class="md:px-6 md:w-1/3 text-4xl font-bold pb-6 text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600 text-center"
+                    id="getting-started">
+
+                    Getting started.</h1>
+                <div class="max-w-full md:w-2/3 space-y-2">
+                    <h1 class="text-2xl font-bold text-teal-500" id="install">Installing.</h1>
+                    <h2 class="text-xl font-semibold">Docker (all platforms)</h2>
+                    <p>
+                        A pre-built Docker image is available for all systems from Docker hub.
+                    </p>
+                    <div class="overflow-auto rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre
+                            class="min-h-full text-xs md:text-xs-2 language-console"><code class="text-slate-200 dark:text-slate-100 dark:bg-slate-800">$ docker run --rm scalesocket/scalesocket:latest scalesocket --help</code></pre>
+                    </div>
+                    <h2 class="text-xl font-semibold">Binary release (linux)</h2>
+                    <p>
+                        Binary releases are available for <b>linux</b> via <a class="text-cyan-600"
+                            href="https://github.com/scalesocket/scalesocket/releases">github</a>, or using the
+                        commandline:
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre
+                            class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ VERSION=v0.1.2-dev curl -SL "https://github.com/scalesocket/scalesocket/releases/download/${VERSION}/scalesocket_${VERSION}_x86_64-unknown-linux-musl.tar.gz" | tar -xzC /usr/bin</code></pre>
+                    </div>
+                    <!---example-->
+                    <h1 class="pt-8 text-2xl font-bold text-teal-500" id="example">A trivial server example.</h1>
+                    <p>
+                        Let's use a shell script and turn it into a websocket server.
+                    </p>
+                    <p class="pt-4">
+                        Create the file <span
+                            class="font-mono bg-sky-50 rounded p-1 dark:text-slate-100 dark:bg-slate-800">example.sh</span>
+                        with the follow
+                        content:
+                    </p>
+                    <div class="overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-sh"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">#!/bin/sh
+echo '{"message": "hello world"}'
+sleep 1
+echo '{"message": "goodbye"}'
+sleep 1
+</code></pre>
+                    </div>
+                    <p class="pt-4">
+                        Make the file executable by issuing:
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre
+                            class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ chmod u+x example.sh</code></pre>
+                    </div>
+                    <p class="pt-4">
+                        We can now serve the script as a websocket endpoint.
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ scalesocket --frame=json example.sh
+INFO listening at 0.0.0.0:9000</code></pre>
+                    </div>
+                    <p class="pt-4">
+                        The above command starts scalesocket on the default port, exposing a websocket endpoint at <span
+                            class="font-mono bg-sky-50 rounded p-1 dark:text-slate-100 dark:bg-slate-800">localhost:9000/anything</span>,
+                        where
+                        "anything" is the <i>room</i> to connect to.
+                    </p>
+                    <p>
+                        The first connection to a specific room will
+                        start the shell script process and subsequent connections will be routed to that process.
+                    </p>
+                    <p>
+                        We can test the endpoint using curl
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ curl --include \
+       --no-buffer \
+       --http1.1 \
+       --header "Connection: Upgrade" \
+       --header "Upgrade: websocket" \
+       --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+       --header "Sec-WebSocket-Version: 13" \
+       http://localhost:9000/asd
+�{"message": "hello world"}�{"message": "goodbye"}%</code></pre>
+                    </div>
+                    <p>
+                        Alternatively, if you have <a class="text-cyan-600"
+                            href="https://github.com/vi/websocat">websocat</a>, we can test
+                        the endpoint using it
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ websocat --text --exit-on-eof ws://localhost:9000/asd
+{"message": "hello world"}
+{"message": "goodbye"}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="introduction">
+            <div class="m-6 md:space-x-6 flex flex-row justify-center flex-wrap md:flex-nowrap">
+                <h1 class="md:px-6 md:w-1/3 text-4xl font-bold pb-6 text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600 text-center"
+                    id="getting-started">Further reading.</h1>
+                <div class="max-w-full md:w-2/3 space-y-2">
+                    <h1 class="text-2xl font-bold text-teal-500" id="install">Examples.</h1>
+                    <p>
+                        There are some <a href="https://github.com/scalesocket/website/tree/main/examples"
+                            class="text-cyan-600">examples</a> on github.
+                    </p>
+                    <h1 class="text-2xl font-bold text-teal-500" id="install">Commandline usage.</h1>
+                    <div class="overflow-auto rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre
+                            class="min-h-full text-xs md:text-xs-2 p-4 text-slate-200 dark:text-slate-100 dark:bg-slate-800">
+USAGE:
+    scalesocket [OPTIONS] &lt;CMD> [-- &lt;ARGS>...]
+
+ARGS:
+    &lt;CMD>
+            Command to wrap
+
+    &lt;ARGS>...
+            Arguments to command
+
+OPTIONS:
+        --addr &lt;ADDR>
+            Interface to bind to
+            
+            [default: 0.0.0.0:9000]
+
+        -b, --binary
+            Set scalesocket to experimental binary mode
+
+        --cmd-attach-delay &lt;SECONDS>
+            Delay before attaching to child [default: 1 for --tcp]
+
+        --frame[=&lt;MODE>...]
+            Enable framing and routing for messages
+            
+            Client messages are amended with ID header. Server messages with optional client ID
+            routed to clients.
+            
+            When set to `json` messages are parsed as JSON. Client messages are amended with an "id"
+            field. Server messages are routed to clients based an optional "id" field. When set to
+            `binary` messages are parsed according to gwsocket's strict mode. Unparseable messages
+            are dropped.
+            
+            [default: binary when set, possible values: binary, json]
+
+        -h, --help
+            Print help information
+
+        --joinmsg &lt;MSG>
+            Emit message to child on client connect (use #ID for id)
+
+        --json
+            Log JSON
+
+        --leavemsg &lt;MSG>
+            Emit message to child on client disconnect (use #ID for id)
+
+        --metrics
+            Expose OpenMetrics endpoint at /metrics
+
+        --passenv &lt;LIST>
+            List of envvars to pass to child
+            
+            [default: PATH,DYLD_LIBRARY_PATH]
+
+        --staticdir &lt;DIR>
+            Serve static files from directory over HTTP
+
+        --stats
+            Expose stats endpoint at /&lt;ROOM>/stats
+
+        --tcp
+            Connect to child using TCP instead of stdio. Use PORT to bind
+
+        --tcpports &lt;START:END>
+            Port range for TCP
+            
+            [default: 9001:9999]
+
+        -v
+            Increase level of verbosity
+
+        -V, --version
+            Print version information
+                            </pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script>hljs.highlightAll();</script>
+    <footer class="text-gray-400 border-gray-100 dark:border-gray-600 border-t mt-6">
+        <div class="text-center p-6">
+            © 2023 &mdash; ScaleSocket &mdash; Made in the EU
+        </div>
+    </footer>
+    </div>
+</body>
+
+</html>
