@@ -102,8 +102,19 @@ sleep 1
                         <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ scalesocket --frame=json example.sh
 INFO listening at 0.0.0.0:9000</code></pre>
                     </div>
+                    <p>
+                        or, alternatively, using Docker
+                    </p>
+                    <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ docker run --rm \
+    -p 9000:9000 \
+    -v "$(pwd)"/example.sh:/app/example.sh \
+    scalesocket/scalesocket:latest \
+    scalesocket /app/example.sh
+INFO listening at 0.0.0.0:9000</code></pre>
+                    </div>
                     <p class="pt-4">
-                        The above command starts scalesocket on the default port, exposing a websocket endpoint at <span
+                        The above starts scalesocket on the default port, exposing a websocket endpoint at <span
                             class="font-mono bg-sky-50 rounded p-1 dark:text-slate-100 dark:bg-slate-800">localhost:9000/anything</span>,
                         where
                         "anything" is the <i>room</i> to connect to.
@@ -123,7 +134,7 @@ INFO listening at 0.0.0.0:9000</code></pre>
        --header "Upgrade: websocket" \
        --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
        --header "Sec-WebSocket-Version: 13" \
-       http://localhost:9000/asd
+       http://localhost:9000/myexampleroom
 �{"message": "hello world"}�{"message": "goodbye"}%</code></pre>
                     </div>
                     <p>
@@ -132,7 +143,7 @@ INFO listening at 0.0.0.0:9000</code></pre>
                         the endpoint using it
                     </p>
                     <div class="mt-4 overflow-scroll rounded shadow-lg dark:shadow-cyan-600/10 bg-slate-800">
-                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ websocat --text --exit-on-eof ws://localhost:9000/asd
+                        <pre class="flex min-h-full text-xs md:text-xs-2 language-console"><code class="flex-auto relative block text-slate-200 dark:text-slate-100 overflow-auto p-4 dark:bg-slate-800">$ websocat --text --exit-on-eof ws://localhost:9000/myexampleroom
 {"message": "hello world"}
 {"message": "goodbye"}</code></pre>
                     </div>
