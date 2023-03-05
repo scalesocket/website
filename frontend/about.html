@@ -52,7 +52,7 @@
                 </div>
                 <div class="grow flex-col max-w-2xl min-w-full md:min-w-[28rem] space-y-2">
                     <h1 class="text-2xl font-bold text-teal-500">What is ScaleSocket?</h1>
-                    <p>Scalesocket is a websocket server and autoscaler. It servers your application via websockets and
+                    <p>ScaleSocket is a websocket server and autoscaler. It servers your application via websockets and
                         scales the number of instances based on the number of connections.</p>
                     <p>The main use-case of ScaleSocket is to vastly <i>simplify the structure of realtime web apps</i>
                         by moving the connection management and scaling outside the application code.</p>
@@ -117,7 +117,7 @@
                                                 processes</td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                tcp/stdio
+                                                stdio, tcp
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
@@ -138,7 +138,7 @@
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                                 <a href="https://github.com/drifting-in-space/spawner"
-                                                    class="text-cyan-600" target="_blank">Spawner</a>
+                                                    class="text-cyan-600" target="_blank">spawner</a>
 
                                             </td>
                                             <td
@@ -151,7 +151,7 @@
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                http/ws
+                                                http, ws
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
@@ -202,6 +202,37 @@
                                         <tr>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                <a href="https://github.com/vi/websocat" class="text-cyan-600"
+                                                    target="_blank">websocat</a>
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                rust</td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                processes</td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                stdio, tcp
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                ✓
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                ✓
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                all-round tool</td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                                 <a href="https://gwsocket.io/" class="text-cyan-600"
                                                     target="_blank">gwsocket</a>
                                             </td>
@@ -213,7 +244,7 @@
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                pipes, stdio
+                                                stdio, pipes
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
@@ -277,7 +308,7 @@
                                                 kubernetes</td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                tcp/udp
+                                                tcp, udp
                                             </td>
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
@@ -293,36 +324,6 @@
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                                 gameserver scaler</td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                inetd
-
-                                            </td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                c
-                                            </td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                processes</td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                stdio
-                                            </td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                ✓</td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                            </td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                            </td>
-                                            <td
-                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
-                                                dynamic websites in 1990's</td>
                                         </tr>
                                         <tr>
                                             <td
@@ -353,6 +354,36 @@
                                             <td
                                                 class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
                                                 dynamic websites in 2000's</td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                inetd
+
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                c
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                processes</td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                stdio
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                ✓</td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                            </td>
+                                            <td
+                                                class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">
+                                                dynamic websites in 1990's</td>
                                         </tr>
                                     </tbody>
                                 </table>
