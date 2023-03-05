@@ -17,14 +17,15 @@
         integrity="sha256-XoaMnoYC5TH6/+ihMEnospgm0J1PM/nioxbOUdnM8HY=" crossorigin="anonymous">
 </head>
 
-<body class="antialiased text-slate-500 dark:text-slate-400 bg-white dark:bg-slate-900">
-    <div id="app" class="max-w-6xl flex flex-col min-h-screen font-roboto mx-auto">
+<body class="antialiased text-slate-700 dark:text-slate-400 bg-white dark:bg-slate-900">
+    <div id="app" class="max-w-6xl flex flex-col min-h-screen font-roboto mx-auto space-y-10">
         <header>
             <nav
-                class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap px-6 py-4 sm:p-6 border-gray-100 dark:border-gray-600 border-b">
+                class="flex items-center justify-center sm:justify-between flex-wrap xs:flex-nowrap p-4 md:p-6 border-gray-100 dark:border-gray-600 border-b">
                 <div class="flex px-4 items-center shrink-0 text-white md:mr-6 text-teal-500 ">
                     <img src="assets/image.svg" class="fill-current h-8 w-8 mr-2" alt="ScaleSocket">
-                    <span class="text-xl ml-2 tracking-tight"><strong>Scale</strong>Socket</span>
+                    <span
+                        class="text-xl ml-2 tracking-tight text-slate-700 dark:text-slate-200"><strong>Scale</strong>Socket</span>
                 </div>
                 <div class="w-full block sm:grow flex items-center justify-start w-auto">
                     <nav class="w-full block grow flex items-center w-auto">
@@ -35,21 +36,22 @@
                         <a href="docs.html"
                             class="rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:bg-slate-100 dark:hover:bg-slate-200 hover:text-slate-900">Docs</a>
                     </nav>
-                    <div>
+                    <div class="whitespace-nowrap">
                         <a href="https://github.com/scalesocket/scalesocket"
-                            class="inline-block rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:text-slate-900  dark:hover:text-slate-400"><i
+                            class="inline-block rounded-lg px-3 py-2 text-slate-700 dark:text-slate-300 font-medium hover:text-slate-900 dark:hover:text-slate-400"><i
                                 class="fa fa-github fa-lg"></i> <span class="hidden sm:inline">Github</span></a>
                     </div>
                 </div>
             </nav>
         </header>
-        <section id="introduction">
-            <div class="m-6 md:space-x-6 flex flex-row justify-center flex-wrap md:flex-nowrap">
-                <h1
-                    class="md:px-6 md:w-1/3 text-4xl font-bold pb-6 text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600 text-center">
-                    Websocket server and autoscaler.</h1>
-                <div class="md:w-2/3 space-y-2">
-                    <h1 class="text-2xl font-bold text-teal-500" id="what">What is ScaleSocket?</h1>
+        <section>
+            <div class="flex flex-row flex-wrap items-start justify-center max-w-full mx-4">
+                <div class="flex w-auto lg:w-64 justify-center mx-8 mb-8">
+                    <h1 class="inline text-4xl whitespace-normal font-bold text-transparent bg-clip-text bg-gradient-to-br from-green-400 to-blue-600 text-center"
+                        id="introduction">Websocket server and autoscaler.</h1>
+                </div>
+                <div class="grow flex-col max-w-2xl min-w-full md:min-w-[28rem] space-y-2">
+                    <h1 class="text-2xl font-bold text-teal-500">What is ScaleSocket?</h1>
                     <p>Scalesocket is a websocket server and autoscaler. It servers your application via websockets and
                         scales the number of instances based on the number of connections.</p>
                     <p>The main use-case of ScaleSocket is to vastly <i>simplify the structure of realtime web apps</i>
@@ -57,9 +59,9 @@
                 </div>
             </div>
         </section>
-        <section id="comparison">
-            <div class="m-6">
-                <h1 class="text-2xl font-bold text-cyan-600">
+        <section>
+            <div class="m-6 mx-4">
+                <h1 class="text-2xl font-bold text-cyan-600" id="comparison">
                     Alternatives and Comparison.</h1>
                 <p>
                     Depending on your needs, these alternatives may suit your needs.
@@ -72,32 +74,32 @@
                         <div class="relative rounded-xl overflow-x-auto">
                             <div class="shadow-sm my-3">
                                 <table class="border-collapse table-fixed min-w-full text-sm">
-                                    <thead>
+                                    <thead class="">
                                         <tr>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-left">
                                                 Application</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-left">
                                                 Language</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-left">
                                                 Spawn Technology</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-left">
                                                 Channels</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-left">
                                                 Production ready</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-left">
                                                 Two-way connection</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
+                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-left">
                                                 Shared backend</th>
                                             <th
-                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                                Main usecase</th>
+                                                class="border-b dark:border-slate-600 font-medium p-4 pr-8 pt-0 pb-3 text-left">
+                                                Usecase</th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white dark:bg-slate-800">
