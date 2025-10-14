@@ -3,14 +3,34 @@
     --gradient-to: #447AEE;
     --tw-gradient-stops: var(--gradient-from), var(--gradient-to);
     --text: rgb(51 65 85);
+    --text-dark: #FFF;
     --text-cyan: rgb(8 145 178);
     --text-slate: rgb(100 116 139);
     --text-teal: rgb(20 184 166);
     --border: rgb(243 244 246);
+    --bg: #FFFFFF;
+    --accent: var(--text-cyan);
+    --accent-hover: rgb(13 148 136);
+    --accent-text: var(--bg);
+    --preformatted: #ccc;
+    --marked: #ffdd33;
+    --disabled: #efefef;
 }
+
+/* Force light mode - override Simple.css dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: light;
+    --bg: #FFFFFF;
+    --accent-bg: #f5f7ff;
+    --text-light: #585858;
+    --preformatted: #ccc;
+  }
+}
+
 body > header {
-    border-color: rgb(243 244 246);
-    background: #FFFFFF;
+    border-color: var(--border);
+    background: var(--bg);
 }
 body > header nav {
     display: flex;
@@ -59,4 +79,8 @@ body > header .bg-gradient-wrap {
   .pills > div {
       width: 33%;
   }
+}
+
+body > main > pre {
+    font-size: 0.8rem;
 }
