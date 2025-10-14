@@ -1,0 +1,62 @@
+:root {
+    --gradient-from: #4ade80;
+    --gradient-to: #447AEE;
+    --tw-gradient-stops: var(--gradient-from), var(--gradient-to);
+    --text: rgb(51 65 85);
+    --text-cyan: rgb(8 145 178);
+    --text-slate: rgb(100 116 139);
+    --text-teal: rgb(20 184 166);
+    --border: rgb(243 244 246);
+}
+body > header {
+    border-color: rgb(243 244 246);
+    background: #FFFFFF;
+}
+body > header nav {
+    display: flex;
+    align-items: center;
+}
+body > header a.header-logo {
+   border: 0;
+   padding: 0;
+   display: flex;
+   align-items: center;
+}
+body > header a.header-logo:hover {
+    background-color: unset;
+}
+body > header a.header-logo > img {
+    height: 46px;
+    width: auto;
+}
+body > header a.header-logo-small > img {
+    height: 1em;
+    width: auto;
+}
+body > header .bg-gradient-wrap {
+    /* ensure element tightly wraps text */
+    display: flex;
+}
+
+.pills {
+    display: flex;
+    gap: 1em;
+    flex-direction: column;
+    margin-top: 1em;
+    align-items: stretch;
+}
+.pills > div {
+    border-radius: 0.75rem;
+    flex: 1;
+}
+.pills > div > p {
+    margin: 0;
+}
+@media (min-width: 768px) {
+  .pills{
+    flex-direction: row;
+  }
+  .pills > div {
+      width: 33%;
+  }
+}

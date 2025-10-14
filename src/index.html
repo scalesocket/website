@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/default.min.css"
+        />
+        <link rel="stylesheet" href="utils.css" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <style>
+            .hljs {
+                background: unset;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/blog/blog.html" class="header-logo">
+                    <img src="assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs.html">Documentation</a>
+                <a href="/download.html">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div class="bg-gradient-wrap">
+                <h1 class="bg-clip-text bg-gradient-to-br">ScaleSocket</h1>
+            </div>
+            <span class="text-secondary">
+                Turn any code into a websocket server.
+            </span>
+        </header>
+
+        <div class="pills">
+            <div class="p-4 shadow-lg">
+                <div class="text-xl text-cyan">Fast</div>
+                <p class="text-secondary">Written with performance in mind</p>
+            </div>
+            <div class="p-4 shadow-lg">
+                <div class="text-xl text-cyan">Simple</div>
+                <p class="text-secondary">Follow the unix philosophy</p>
+            </div>
+            <div class="p-4 shadow-lg">
+                <div class="text-xl text-cyan">Open source</div>
+                <p class="text-secondary">With a proven track record</p>
+            </div>
+        </div>
+
+        <main>
+            <h2 class="text-teal">What it is.</h2>
+
+            <p>
+                ScaleSocket is a <b>command-line tool</b> for serving a binary
+                or a script over
+                <a href="https://en.wikipedia.org/wiki/WebSocket">websockets</a
+                >. If you are a programmer and need to build a collaborative
+                server, ScaleSocket might be the tool for you.
+            </p>
+
+            <p>
+                To use it, you start your script using ScaleSocket and it maps
+                the
+                <a href="https://en.wikipedia.org/wiki/Standard_streams"
+                    >standard input and output</a
+                >
+                streams to a websocket.
+            </p>
+
+            <p>
+                Furthermore, it <b>supports rooms</b>. Multiple websocket
+                connections to the same room will be routed to the same script
+                process. It makes building multiplayer apps, collaborative
+                editing, and games a breeze.
+            </p>
+
+            <p>Here's an image of how that looks:</p>
+
+            <figure>
+                <img
+                    src="assets/diagram.svg"
+                    alt="ScaleSocket high level architecture diagram"
+                />
+                <figcaption>
+                    High level architecture diagram. ScaleSocket listens for
+                    websocket connections and spawns backend processes running
+                    your code. All clients in a room are routed to the same
+                    process.
+                </figcaption>
+            </figure>
+
+            <h2 class="text-teal">Recent articles.</h2>
+
+            Examples and thoughts on websockets.
+
+            <ul>
+                <li>
+                    <a href="posts/first.html" class=""> First post </a>
+                </li>
+                <li>
+                    <a href="posts/second.html" class=""> Second post </a>
+                </li>
+            </ul>
+
+            <h2 class="text-teal">Getting started.</h2>
+
+            <ul class="">
+                <li>
+                    <a href="posts/first.html" class=""> First post </a>
+                </li>
+                <li>
+                    <a href="posts/second.html" class=""> Second post </a>
+                </li>
+            </ul>
+
+            <pre class="code"><code class="language-python"># this is code
+  for i in range(10):
+    print("hello world")
+  </code></pre>
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>
