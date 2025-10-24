@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>ScaleSocket - Documentation</title>
+        <title>ScaleSocket - Download</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -25,8 +25,8 @@
                     <img src="/assets/image.svg" alt="ScaleSocket" />
                 </a>
                 <a href="/index.html">Home</a>
-                <a href="/docs/" class="active">Documentation</a>
-                <a href="/download/">Download</a>
+                <a href="/docs/">Documentation</a>
+                <a href="/download/" class="active">Download</a>
                 <a
                     href="https://github.com/scalesocket/scalesocket"
                     class="header-logo header-logo-small ml"
@@ -41,27 +41,63 @@
             </nav>
 
             <div>
-                <h1>Documentation</h1>
+                <h1>Download</h1>
             </div>
         </header>
 
         <main>
-            <h2 class="text-teal">Resources.</h2>
+            <h2 class="text-teal" id="installation">Installation.</h2>
 
-            <ul>
-                <li>
-                    <a href="/download/">Installation</a>
-                </li>
+            <h3 id="docker">Docker (all platforms)</h3>
+
+            <p>
+                A pre-built Docker image is available for all systems from
+                Docker Hub.
+            </p>
+
+            <code>docker run --rm scalesocket/scalesocket:latest
+                scalesocket --help</code>
+
+            <h3 id="cargo">Cargo (all platforms)</h3>
+
+            <p>
+                If you have installed the Rust toolchain, you can also install
+                using cargo:
+            </p>
+
+            <code>cargo install --force scalesocket</code>
+
+            <h3 id="binary">Binary release (macOS and Linux)</h3>
+
+            <h4>macOS</h3>
+            <p>
+                Binary releases are available via
+                <a href="https://github.com/scalesocket/scalesocket/releases">GitHub</a>.
+                Look for the archive file ending in <i>apple-darwin.tar.gz</i>.
+            </p>
+
+            <h4>Linux</h3>
+            <p>
+                Binary releases are available for Linux via
+                <a href="https://github.com/scalesocket/scalesocket/releases">GitHub</a> or
+                using the command-line:
+            </p>
+
+            <code>VERSION=v0.2.3 curl -SL
+            "https://github.com/scalesocket/scalesocket/releases/download/${VERSION}/scalesocket_${VERSION}_x86_64-unknown-linux-musl.tar.gz"
+            | tar -xzC /usr/bin</code>
+
+            <h2 class="text-teal">Next.</h2>
+
+            <ul class="">
                 <li>
                     <a href="/docs/quickstart.html">Quick start</a>
                 </li>
                 <li>
                     <a href="/docs/cli.html">Command-line reference</a>
                 </li>
-                <li>
-                    <a href="https://github.com/scalesocket/scalesocket/tree/main/examples">Examples</a> (GitHub)
-                </li>
             </ul>
+
 
         <br />
         <br />

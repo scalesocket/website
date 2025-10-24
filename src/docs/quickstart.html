@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket - Quicktstart</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
+        />
+        <link rel="stylesheet" href="/style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/" class="header-logo">
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs/" class="active">Documentation</a>
+                <a href="/download/">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="/assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div>
+                <h1>Documentation</h1>
+            </div>
+        </header>
+
+        <main>
+
+        <h2 class="text-teal">Quick start.</h2>
+
+        <h3>Prerequisites</h3>
+
+        <ul>
+            <li>
+                ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
+            </li>
+            <li>
+                <a href="https://nodejs.org">Node.js</a> version v22.18.0 or later.
+            </li>
+        </ul>
+
+        <h3>An example server</h3>
+
+        <p>
+            Create a file named <code>quickstart-server.ts</code> with the following contents:
+        </p>
+
+
+        <div class="code-windows">
+            <div class="code-window">
+                <div class="window-header">
+                    <span class="window-title">quickstart-server.ts</span>
+                </div>
+                <pre><code class="language-typescript">import { createInterface } from 'readline';
+
+const onReceive = (data: string) => {
+  // Messages logged to stdout are sent to the client via the websocket
+  console.log("Hello from the server")
+  // Messages logged to stderr are not sent
+  console.error("Received websocket data:", data);
+}
+
+// Messages are received by reading lines from stdin
+createInterface({ input: process.stdin })
+.on('line', (line: string) => onReceive(line.trim()));</code></pre>
+            </div>
+
+            <p>Start the server by wrapping Node.js in ScaleSocket.
+            Here we use <a href="https://nodejs.org/en/learn/typescript/run-natively">Node.js to run Typescript natively</a>.</p>
+
+            <div class="code-window terminal">
+                <div class="window-header">
+                    <span class="window-title">terminal</span>
+                </div>
+                <pre><code class="language-bash">$ scalesocket node -- --experimental-strip-types ./example-server.mts
+[INFO] listening at 0.0.0.0:9000</code></pre>
+            </div>
+
+            <p>
+            Then connect as many clients as you want to a room at <code>localhost:9000/room-name</code>.
+            For example, using <a href="https://github.com/websockets/wscat">wscat</a>:
+            </p>
+
+            <div class="code-window terminal">
+                <div class="window-header">
+                    <span class="window-title">terminal</span>
+                </div>
+                <pre><code class="language-crmsh">$ npm install -g wscat
+added 9 packages in 142ms
+
+$ wscat -c "ws://localhost:9000/example-room"
+Connected (press CTRL+C to quit)
+&gt; Hello world
+&lt; Hello from the server</code></pre>
+            </div>
+        </div>
+
+        <p>
+            With default options, anything logged to stdout will be sent to the clients in the room.
+        </p>
+        <p>
+            The room name, such as <code>example-room</code> can be any URL-compatible string.
+        </p>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>
