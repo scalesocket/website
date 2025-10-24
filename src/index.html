@@ -10,36 +10,33 @@
         />
         <link
             rel="stylesheet"
-            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-light.min.css"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
         />
         <link rel="stylesheet" href="utils.css" />
         <link rel="stylesheet" href="style.css" />
         <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
-        <style>
-            .hljs {
-                background: unset;
-            }
-        </style>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+
     </head>
     <body>
         <header>
             <nav>
                 <a href="/blog/blog.html" class="header-logo">
-                    <img src="assets/image.svg" alt="ScaleSocket" />
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
                 </a>
-                <a href="/index.html">Home</a>
-                <a href="/docs.html">Documentation</a>
-                <a href="/download.html">Download</a>
+                <a href="/index.html" class="active">Home</a>
+                <a href="/docs/">Documentation</a>
+                <a href="/download/">Download</a>
                 <a
                     href="https://github.com/scalesocket/scalesocket"
                     class="header-logo header-logo-small ml"
                 >
                     <img
-                        src="assets/github-mark.svg"
+                        src="/assets/github-mark.svg"
                         alt="GitHub logo"
                         class="pr-1"
                     />
-                    GitHub
+                    <span>GitHub</span>
                 </a>
             </nav>
 
@@ -47,7 +44,7 @@
                 <h1 class="bg-clip-text bg-gradient-to-br">ScaleSocket</h1>
             </div>
             <span class="text-secondary">
-                Turn any code into a websocket server.
+                Turn any code into a multiplayer websocket server.
             </span>
         </header>
 
@@ -58,7 +55,7 @@
             </div>
             <div class="p-4 shadow-lg">
                 <div class="text-xl text-cyan">Simple</div>
-                <p class="text-secondary">Follow the unix philosophy</p>
+                <p class="text-secondary">Follows the unix philosophy</p>
             </div>
             <div class="p-4 shadow-lg">
                 <div class="text-xl text-cyan">Open source</div>
@@ -66,8 +63,9 @@
             </div>
         </div>
 
+
         <main>
-            <h2 class="text-teal">What it is.</h2>
+            <h2 class="text-teal" id="what-it-is">What it is.</h2>
 
             <p>
                 ScaleSocket is a <b>command-line tool</b> for serving a binary
@@ -88,9 +86,9 @@
 
             <p>
                 Furthermore, it <b>supports rooms</b>. Multiple websocket
-                connections to the same room will be routed to the same script
-                process. It makes building multiplayer apps, collaborative
-                editing, and games a breeze.
+                connections to the same URL will be routed to the same process.
+                It makes building multiplayer apps, collaborative editing, and
+                games a breeze.
             </p>
 
             <p>Here's an image of how that looks:</p>
@@ -108,34 +106,82 @@
                 </figcaption>
             </figure>
 
-            <h2 class="text-teal">Recent articles.</h2>
+            <h2 class="text-teal" id="what-it-looks-like">What it looks like.</h2>
 
-            Examples and thoughts on websockets.
+            <p>
+                ScaleSocket is language agnostic.
+                A multiplayer websocket server in Typescript looks like this:
+            </p>
 
-            <ul>
-                <li>
-                    <a href="posts/first.html" class=""> First post </a>
-                </li>
-                <li>
-                    <a href="posts/second.html" class=""> Second post </a>
-                </li>
-            </ul>
+            <div class="code-windows">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-title">example-server.ts</span>
+                    </div>
+                    <pre><code class="language-typescript">import { createInterface } from 'readline';
+
+const onReceive = (data: string) => {
+  // Messages logged to stdout are sent to the client via the websocket
+  console.log("Hello from the server")
+  // Messages logged to stderr are not sent
+  console.error("Received websocket data:", data);
+}
+
+// Messages are received by reading lines from stdin
+createInterface({ input: process.stdin })
+  .on('line', (line: string) => onReceive(line.trim()));</code></pre>
+                </div>
+
+                <p>Start the server by wrapping Node.js in ScaleSocket.
+                Here we use <a href="https://nodejs.org/en/learn/typescript/run-natively">Node.js to run Typescript natively</a>.</p>
+
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-bash">$ scalesocket node -- --experimental-strip-types ./example-server.mts
+    [INFO] listening at 0.0.0.0:9000</code></pre>
+                </div>
+
+                <p>
+                Then connect as many clients as you want to a room at <code>localhost:9000/example-room</code>.
+                For example, using <a href="https://github.com/websockets/wscat">wscat</a>:
+                </p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-crmsh">$ npm install -g wscat
+added 9 packages in 142ms
+
+$ wscat -c "ws://localhost:9000/example-room"
+Connected (press CTRL+C to quit)
+&gt; Hello world
+&lt; Hello from the server</code></pre>
+                </div>
+            </div>
+
 
             <h2 class="text-teal">Getting started.</h2>
 
-            <ul class="">
+            <ul>
                 <li>
-                    <a href="posts/first.html" class=""> First post </a>
+                    <a href="/docs/quickstart.html">Quick start</a>
                 </li>
                 <li>
-                    <a href="posts/second.html" class=""> Second post </a>
+                    <a href="/docs/">Documentation</a>
+                </li>
+                <li>
+                    <a href="/docs/cli.html">Command-line reference</a>
                 </li>
             </ul>
+            <br />
+            <br />
+            <br />
+            <br />
 
-            <pre class="code"><code class="language-python"># this is code
-  for i in range(10):
-    print("hello world")
-  </code></pre>
         </main>
 
         <script>
