@@ -1,2 +1,4 @@
 [build]
-  base = "frontend/"
+  base = "src/"
+[build.processing.html]
+  pretty_urls = true
