@@ -1,14 +1,14 @@
 :root {
     --gradient-from: #4ade80;
-    --gradient-to: #447AEE;
+    --gradient-to: #447aee;
     --tw-gradient-stops: var(--gradient-from), var(--gradient-to);
     --text: rgb(51 65 85);
-    --text-dark: #FFF;
+    --text-dark: #fff;
     --text-cyan: rgb(8 145 178);
     --text-slate: rgb(100 116 139);
     --text-teal: rgb(20 184 166);
     --border: rgb(243 244 246);
-    --bg: #FFFFFF;
+    --bg: #ffffff;
     --accent: var(--text-cyan);
     --accent-hover: rgb(13 148 136);
     --accent-text: var(--bg);
@@ -19,24 +19,23 @@
 
 /* Force light mode - override Simple.css dark mode */
 @media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: light;
-    --bg: #FFFFFF;
-    --accent-bg: #f5f7ff;
-    --text-light: #585858;
-    --preformatted: #ccc;
-  }
+    :root {
+        color-scheme: light;
+        --bg: #ffffff;
+        --accent-bg: #f5f7ff;
+        --text-light: #585858;
+        --preformatted: #ccc;
+    }
 }
-
 
 body > header {
     border-color: var(--border);
     background: var(--bg);
 }
 body > header > :only-child {
-  /* Remove simple.css margin */
-  margin-block-start: 0;
-  margin-block-end: -32px;
+    /* Remove simple.css margin */
+    margin-block-start: 0;
+    margin-block-end: -32px;
 }
 body > header nav {
     display: flex;
@@ -46,16 +45,16 @@ body > header a {
     border: 0;
 }
 body > header a.header-logo {
-   border: 0;
-   padding: 0;
-   display: flex;
-   align-items: center;
+    border: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 body > header a.header-logo:hover {
     background-color: unset;
 }
-body > header a.active{
-    background-color: #F1F5F9;
+body > header a.active {
+    background-color: #f1f5f9;
 }
 body > header a.header-logo > img {
     height: 46px;
@@ -67,10 +66,10 @@ body > header a.header-logo-small > img {
     object-fit: contain;
 }
 @media (max-width: 768px) {
-   /* Hide header github small on mobile screens */
-  body > header a.header-logo-small > span {
-    display: none;
-  }
+    /* Hide header github small on mobile screens */
+    body > header a.header-logo-small > span {
+        display: none;
+    }
 }
 body > header .bg-gradient-wrap {
     /* ensure element tightly wraps text */
@@ -96,12 +95,12 @@ body > header h1 {
     margin: 0;
 }
 @media (min-width: 768px) {
-  .pills{
-    flex-direction: row;
-  }
-  .pills > div {
-      width: 33%;
-  }
+    .pills {
+        flex-direction: row;
+    }
+    .pills > div {
+        width: 33%;
+    }
 }
 
 body > main > pre {
@@ -126,7 +125,6 @@ body > main > pre {
     border: 1px solid var(--disabled);
 }
 
-
 .code-window.terminal > pre {
     background: #282c34;
 }
@@ -146,7 +144,7 @@ body > main > pre {
 }
 
 .window-header::before {
-    content: '';
+    content: "";
     position: absolute;
     left: 0.75rem;
     top: 50%;
@@ -160,7 +158,10 @@ body > main > pre {
         radial-gradient(circle, #ffbd2e 50%, transparent 50%),
         radial-gradient(circle, #28ca42 50%, transparent 50%);
     background-size: 1rem 1rem;
-    background-position: 0 0, 1.25rem 0, 2.5rem 0;
+    background-position:
+        0 0,
+        1.25rem 0,
+        2.5rem 0;
     background-repeat: no-repeat;
 }
 
