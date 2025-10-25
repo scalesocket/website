@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket - Alternatives and comparison</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
+        />
+        <link rel="stylesheet" href="/utils.css" />
+        <link rel="stylesheet" href="/style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <style>
+            table {
+                font-size: 0.85em;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/" class="header-logo">
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs/" class="active">Documentation</a>
+                <a href="/download/">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="/assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div>
+                <h1>Documentation</h1>
+            </div>
+        </header>
+
+        <main>
+            <h2 class="text-teal">Alternatives and comparison.</h2>
+
+            <h3>ScaleSocket vs. websocketd</h3>
+
+            <p>
+                ScaleSocket is intended to be a drop-in replacement for <a href="http://websocketd.com/">websocketd</a>.
+                It supports many of the same features, but allows websocket connections to share a single backend process.
+            </p>
+
+            <p>
+                ScaleSocket has first-class support for rooms, and allows routing messages to specific clients.
+            </p>
+
+            <p>
+                Additionally ScaleSocket exposes APIs for fetching room metadata and metrics, which are useful for building lobbies and monitoring.
+            </p>
+
+            <h3>ScaleSocket vs. Socket.io</h3>
+
+            <p>
+                ScaleSocket can be used as a replacement for <a href="https://socket.io/">Socket.io</a> in some cases.
+                It supports some of the same features, such as rooms and message routing.
+            </p>
+
+            <p>
+                The difference lies in how they are integrated with the backend code.
+                Socket.io is a (frontend and) backend library.
+                It requires the backend to handle connections and room logic.
+            </p>
+
+            <p>
+                ScaleSocket is a command line tool that wraps the backend without modifying its code.
+                It abstracts away WebSocket connections and room management from the backend implementation.
+            </p>
+
+            <h3>Other alternatives</h3>
+
+            <p>
+                A comparison of tools offering similar functionality.
+                The table highlights which tools support bidirectional communication with a shared backend instance.
+            </p>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Application</th>
+                            <th>Language</th>
+                            <th>Spawn Technology</th>
+                            <th>Channels</th>
+                            <th>Bidirectional connection</th>
+                            <th>Shared backend</th>
+                            <th>Use case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://scalesocket.org/">ScaleSocket</a></td>
+                            <td>rust</td>
+                            <td>processes</td>
+                            <td>stdio, tcp</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>bidirectional websocket server</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/drifting-in-space/plane">plane</a></td>
+                            <td>rust</td>
+                            <td>docker</td>
+                            <td>http, ws</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>bidirectional websocket server</td>
+                        </tr>
+                        <tr>
+                            <td><a href="http://websocketd.com/">websocketd</a></td>
+                            <td>go</td>
+                            <td>processes</td>
+                            <td>stdio</td>
+                            <td>✓</td>
+                            <td></td>
+                            <td>bidirectional websocket server</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/vi/websocat">websocat</a></td>
+                            <td>rust</td>
+                            <td>processes</td>
+                            <td>stdio, tcp</td>
+                            <td>✓</td>
+                            <td></td>
+                            <td>all-round tool</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://gwsocket.io/">gwsocket</a></td>
+                            <td>c</td>
+                            <td></td>
+                            <td>stdio, pipes</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>bidirectional websocket stream</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/vi/wsbroad/">wsbroad</a></td>
+                            <td>rust</td>
+                            <td></td>
+                            <td></td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>websocket broadcaster</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://github.com/novnc/websockify">websockify</a></td>
+                            <td>various</td>
+                            <td>processes</td>
+                            <td>tcp</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>websocket to TCP proxy</td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://agones.dev/site/docs/overview/">agones</a></td>
+                            <td>go</td>
+                            <td>kubernetes</td>
+                            <td>tcp, udp</td>
+                            <td>✓</td>
+                            <td>✓</td>
+                            <td>gameserver scaler</td>
+                        </tr>
+                        <tr>
+                            <td>FastCGI</td>
+                            <td>c</td>
+                            <td>processes</td>
+                            <td>stdio</td>
+                            <td></td>
+                            <td>✓</td>
+                            <td>dynamic websites in 2000's</td>
+                        </tr>
+                        <tr>
+                            <td>inetd</td>
+                            <td>c</td>
+                            <td>processes</td>
+                            <td>stdio</td>
+                            <td></td>
+                            <td></td>
+                            <td>dynamic websites in 1990's</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p>
+                Also some servers, such as NGINX and Caddy support spawning processes and CGI with plugins.
+            </p>
+
+            <h2 class="text-teal">Next.</h2>
+
+            <ul>
+                <li>
+                    <a href="/docs/quickstart.html">Quick start</a>
+                </li>
+                <li>
+                    <a href="/docs/usage.html">Usage</a>
+                </li>
+                <li>
+                    <a href="/docs/advanced-usage.html">Advanced usage</a>
+                </li>
+                <li>
+                    <a href="/docs/cli.html">Command-line reference</a>
+                </li>
+            </ul>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>
