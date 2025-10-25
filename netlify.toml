@@ -1,4 +1,9 @@
 [build]
   base = "src/"
+
 [build.processing.html]
   pretty_urls = true
+
+[[redirects]]
+  from = "/man/*"
+  to = "/docs/:splat"
