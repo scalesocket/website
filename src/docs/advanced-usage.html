@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket - Advanced usage</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
+        />
+        <link rel="stylesheet" href="/utils.css" />
+        <link rel="stylesheet" href="/style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/" class="header-logo">
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs/" class="active">Documentation</a>
+                <a href="/download/">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="/assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div>
+                <h1>Documentation</h1>
+            </div>
+        </header>
+
+        <main>
+
+        <h2 class="text-teal">Advanced usage.</h2>
+
+        <h3>Environment variables</h3>
+
+        <p>
+            ScaleSocket can optionally expose CGI <a href="https://www.rfc-editor.org/rfc/rfc3875.html">environment variables</a> to the target.
+        </p>
+
+        <p>The supported environment variables are:</p>
+
+        <ul>
+            <li><code>QUERY_STRING</code> eg. <code>foo=bar&baz=qux</code></li>
+            <li><code>REMOTE_ADDR</code> eg. <code>127.0.0.1:1234</code></li>
+            <li><code>ROOM</code> eg. <code>exampleroom</code></li>
+            <li><code>PORT</code> for binding in TCP mode</li>
+            <li>Any environment variables specified with <code>--passenv</code></li>
+        </ul>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--passenv</code> argument for details.
+        </p>
+
+        <h3>HTTP endpoints</h3>
+
+        <h4>Metrics endpoint</h4>
+
+        <p>
+            ScaleSocket can expose an <a href="https://openmetrics.io/">OpenMetrics</a> and <a href="https://prometheus.io/">Prometheus</a> compatible endpoint for scraping metrics.
+        </p>
+
+        <p>The tracked metrics are:</p>
+
+        <ul>
+            <li><code>scalesocket_websocket_connections</code> with the label <code>room</code></li>
+            <li><code>scalesocket_websocket_connections_total</code> with the label <code>room</code></li>
+        </ul>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--metrics</code> flag for details.
+        </p>
+
+        <h4>Metadata endpoint</h4>
+
+        <p>
+            ScaleSocket can expose a JSON endpoint for retrieving rooms and their metadata.
+        </p>
+
+        <p>
+            When <code>--framing</code> is set to JSON, additional metadata can be set by the server using messages with a <code>_meta: true</code> field.
+            This is useful for building a lobby or room list.
+        </p>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--api</code> flag for details.
+        </p>
+
+        <h4>Health endpoint</h4>
+
+        <p>
+            ScaleSocket exposes a standard <code>/health</code> endpoint for checking readiness.
+        </p>
+
+        <h3>Delimiters</h3>
+
+        <p>
+            ScaleSocket parses output into messages by splitting output at newline (<code>\n</code>), except when <code>--binary</code> mode is enabled.
+        </p>
+
+        <p>
+            To alter this behaviour, the <code>--delimiters</code> argument can be used to specify a set of custom delimiters.
+            For example <code>--delimiters=,</code> will split comma-separated output by the target into messages.
+        </p>
+
+        <p>
+            To set the delimiter to the null-byte (<code>\0</code>), use <code>--null</code>. This is useful for outputting multiline messages from the target, for example as a backend for <a href="https://htmx.org/">htmx</a>.
+        </p>
+
+        <h3>Caching</h3>
+
+        <p>
+            ScaleSocket can optionally cache server sent messages, and send them to new clients when they join a room.
+        </p>
+
+        <p>
+            Two types of caching are supported: <code>all</code> and <code>tagged</code>. Supported cache sizes are <code>1</code>, <code>8</code> and <code>64</code>.
+        </p>
+
+        <p>
+            This is an experimental feature.
+        </p>
+
+        <h4>Caching all messages</h4>
+
+        <p>
+            When <code>--cache=all:8</code> is enabled, the last 8 messages sent by the server will be cached.
+        </p>
+
+        <p>
+            This is useful for enabling a chat history.
+        </p>
+
+        <h4>Caching tagged messages</h4>
+
+        <p>
+            When <code>--framing</code> is set to JSON, and <code>--cache=tagged:8</code> is enabled, only messages with a <code>_cache: true</code> field will be cached.
+        </p>
+
+        <p>
+            This is useful for maintaining a state that is sent quickly to clients when they join a room.
+        </p>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--cache</code> and <code>--cachepersist</code> arguments for details.
+        </p>
+
+        <h2 class="text-teal">Next.</h2>
+
+        <ul>
+            <li>
+                <a href="/docs/cli.html">Command-line reference</a>
+            </li>
+        </ul>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>

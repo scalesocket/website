@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket - Usage</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
+        />
+        <link rel="stylesheet" href="/utils.css" />
+        <link rel="stylesheet" href="/style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/" class="header-logo">
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs/" class="active">Documentation</a>
+                <a href="/download/">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="/assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div>
+                <h1>Documentation</h1>
+            </div>
+        </header>
+
+        <main>
+
+        <h2 class="text-teal">Usage.</h2>
+
+        <h3>Wrapping a binary or script</h3>
+
+        <p>
+            The command to spawn the target is specified as the argument to the <code>scalesocket</code> command.
+            The target can be a script or a binary.
+        </p>
+
+        <div class="code-window terminal">
+            <div class="window-header">
+                <span class="window-title">terminal</span>
+            </div>
+            <pre><code class="language-bash">$ scalesocket ./example.sh</code></pre>
+        </div>
+
+        <h4>Passing arguments</h4>
+
+        <p>
+            If the target requires arguments, they can be specified after a <code>--</code> separator.
+        </p>
+
+        <div class="code-window terminal">
+            <div class="window-header">
+                <span class="window-title">terminal</span>
+            </div>
+            <pre><code class="language-bash">$ scalesocket ./example.sh -- --arg1 --arg2</code></pre>
+        </div>
+
+        <h4>STDIO and TCP modes</h4>
+
+        <p>
+            By default, incoming websocket messages are written to the target's <em>stdin</em>.
+            The target's <em>stdout</em> is sent back to the websocket client.
+            Alternatively, the messages can be sent to the target over a TCP socket.
+        </p>
+
+        <p>
+            When using TCP mode, the target must be configured to bind to the port specified by the environment variable <code>PORT</code>.
+        </p>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--tcp</code>, <code>--tcpports</code> and <code>--delay</code> arguments for details.
+        </p>
+
+        <h3>Rooms</h3>
+
+        <p>
+            Clients connecting to the server specify a room in the connection URL path.
+            The room ID is the first path component of the URL. For example <code>wss://example.com/exampleroom</code>.
+        </p>
+
+        <p>
+            Connecting to a room spawns a new process of the wrapped binary or script. Subsequent connections to the same room share the same process.
+        </p>
+
+        <h3>Framing and Routing Messages</h3>
+
+        <p>
+            ScaleSocket can optionally parse, tag and route messages.
+        </p>
+
+        <p>
+            A convenience option <code>--json</code> is provided, which enables JSON framing with default join and leave messages.
+            See below for an explanation of these options.
+        </p>
+
+        <h4>JSON framing</h4>
+
+        <p>
+            When <code>--frame</code> or <code>--frame=json</code> is enabled, messages will be parsed and routed, with the following rules:
+        </p>
+
+        <ul>
+            <li>Messages from the client, that are not valid JSON are dropped</li>
+            <li>Messages from the client are tagged with an <code>_from</code> field</li>
+            <li>Messages from the server, that contain a <code>_to</code> field will be routed to the specific client</li>
+        </ul>
+
+        <p>In addition:</p>
+
+        <ul>
+            <li>Messages from the server, that contain a <code>_meta</code> field set to <code>true</code> will be stored in the room metadata, and dropped</li>
+        </ul>
+
+        <h4>Binary framing (GWSocket)</h4>
+
+        <p>
+            When <code>--frame=gwsocket</code> is enabled, ScaleSocket is compatible with <a href="https://gwsocket.io/">gwsocket</a>. Messages will be parsed according to the <a href="https://gwsocket.io/man#man-strict-mode">gwsocket strict mode</a>, with the following rules:
+        </p>
+
+        <ul>
+            <li>Messages from the client, with an invalid header are dropped</li>
+            <li>Messages from the client must set the header type to <code>0x01</code> (text)</li>
+            <li>Messages from the server, that contain a nonzero client <code>id</code> field will be routed to the specific client</li>
+        </ul>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--frame</code>, <code>--serverframe</code> and <code>--clientframe</code> arguments for details.
+        </p>
+
+        <h3>Join and leave messages</h3>
+
+        <p>
+            ScaleSocket can optionally send a message to the target when a client joins or leaves a room.
+        </p>
+
+        <p>The messages support the variables:</p>
+
+        <ul>
+            <li><code>#ID</code> eg. <code>123</code></li>
+            <li><code>QUERY_XYZ</code> for each query parameter, <code>?xyz=</code>, in the connection URL.</li>
+            <li>The Environment variables</li>
+        </ul>
+
+        <p>For example, starting scalesocket with:</p>
+
+        <div class="code-window terminal">
+            <div class="window-header">
+                <span class="window-title">terminal</span>
+            </div>
+            <pre><code class="language-bash">$ scalesocket --joinmsg '{"type":"Join","_from":#ID}' ./example.sh</code></pre>
+        </div>
+
+        <p>
+            Sends the message <code>{"type":"Join","_from":123}</code> to the server when a new client joins. This is useful for keeping track of connected clients.
+        </p>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--joinmsg</code>, <code>--leavemsg</code> arguments for details.
+        </p>
+
+        <h3>Static file hosting</h3>
+
+        <p>
+            ScaleSocket can serve static files from a directory.
+        </p>
+
+        <p>
+            See the <a href="/docs/cli.html">Command-line reference</a> and the <code>--staticdir</code> argument for details.
+        </p>
+
+        <h2 class="text-teal">Next.</h2>
+
+        <ul>
+            <li>
+                <a href="/docs/advanced-usage.html">Advanced Usage</a>
+            </li>
+            <li>
+                <a href="/docs/cli.html">Command-line reference</a>
+            </li>
+        </ul>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>
