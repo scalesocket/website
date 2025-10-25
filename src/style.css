@@ -191,6 +191,7 @@ body > main > pre {
 }
 
 #lang-typescript:checked ~ .lang-section.typescript,
-#lang-python:checked ~ .lang-section.python {
+#lang-python:checked ~ .lang-section.python,
+#lang-bash:checked ~ .lang-section.bash {
     display: block;
 }
