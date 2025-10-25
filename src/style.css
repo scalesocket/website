@@ -180,3 +180,17 @@ body > main > pre {
     line-height: 1.4;
     overflow: auto;
 }
+
+/* Language-specific sections controlled by radio inputs */
+.lang-section {
+    display: none;
+    border-top: var(--border-width) solid var(--border);
+    border-bottom: var(--border-width) solid var(--border);
+    margin: 3rem 0;
+    padding: 2rem 1rem;
+}
+
+#lang-typescript:checked ~ .lang-section.typescript,
+#lang-python:checked ~ .lang-section.python {
+    display: block;
+}

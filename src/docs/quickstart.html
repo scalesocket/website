@@ -51,30 +51,39 @@
 
         <h2 class="text-teal">Quick start.</h2>
 
-        <h3>Prerequisites</h3>
+        <p>Select your language:</p>
 
-        <ul>
-            <li>
-                ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
-            </li>
-            <li>
-                <a href="https://nodejs.org">Node.js</a> version v22.18.0 or later.
-            </li>
-        </ul>
+        <input type="radio" name="lang" id="lang-typescript" value="typescript" checked />
+        <label for="lang-typescript">TypeScript</label>
+        <br />
 
-        <h3>An example server</h3>
+        <input type="radio" name="lang" id="lang-python" value="python" />
+        <label for="lang-python">Python</label>
 
-        <p>
-            Create a file named <code>quickstart-server.ts</code> with the following contents:
-        </p>
+        <section class="lang-section typescript">
+            <h3>Prerequisites</h3>
 
+            <ul>
+                <li>
+                    ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
+                </li>
+                <li>
+                    <a href="https://nodejs.org">Node.js</a> version v22.18.0 or later.
+                </li>
+            </ul>
 
-        <div class="code-windows">
-            <div class="code-window">
-                <div class="window-header">
-                    <span class="window-title">quickstart-server.ts</span>
-                </div>
-                <pre><code class="language-typescript">import { createInterface } from 'readline';
+            <h3>An example server</h3>
+
+            <p>
+                Create a file named <code>quickstart-server.ts</code> with the following contents:
+            </p>
+
+            <div class="code-windows">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-title">quickstart-server.ts</span>
+                    </div>
+                    <pre><code class="language-typescript">import { createInterface } from 'readline';
 
 const onReceive = (data: string) => {
   // Messages logged to stdout are sent to the client via the websocket
@@ -86,44 +95,118 @@ const onReceive = (data: string) => {
 // Messages are received by reading lines from stdin
 createInterface({ input: process.stdin })
 .on('line', (line: string) => onReceive(line.trim()));</code></pre>
-            </div>
-
-            <p>Start the server by wrapping Node.js in ScaleSocket.
-            Here we use <a href="https://nodejs.org/en/learn/typescript/run-natively">Node.js to run Typescript natively</a>.</p>
-
-            <div class="code-window terminal">
-                <div class="window-header">
-                    <span class="window-title">terminal</span>
                 </div>
-                <pre><code class="language-bash">$ scalesocket node -- --experimental-strip-types ./example-server.mts
+
+                <p>Start the server by wrapping Node.js in ScaleSocket.
+                Here we use <a href="https://nodejs.org/en/learn/typescript/run-natively">Node.js to run Typescript natively</a>.</p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-bash">$ scalesocket node -- --experimental-strip-types ./quickstart-server.ts
 [INFO] listening at 0.0.0.0:9000</code></pre>
-            </div>
-
-            <p>
-            Then connect as many clients as you want to a room at <code>localhost:9000/room-name</code>.
-            For example, using <a href="https://github.com/websockets/wscat">wscat</a>:
-            </p>
-
-            <div class="code-window terminal">
-                <div class="window-header">
-                    <span class="window-title">terminal</span>
                 </div>
-                <pre><code class="language-crmsh">$ npm install -g wscat
+
+                <p>
+                Then connect as many clients as you want to a room at <code>localhost:9000/room-name</code>.
+                For example, using <a href="https://github.com/websockets/wscat">wscat</a>:
+                </p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-crmsh">$ npm install -g wscat
 added 9 packages in 142ms
 
 $ wscat -c "ws://localhost:9000/example-room"
 Connected (press CTRL+C to quit)
 &gt; Hello world
 &lt; Hello from the server</code></pre>
+                </div>
             </div>
-        </div>
 
-        <p>
-            With default options, anything logged to stdout will be sent to the clients in the room.
-        </p>
-        <p>
-            The room name, such as <code>example-room</code> can be any URL-compatible string.
-        </p>
+            <p>
+                With default options, anything logged to stdout will be sent to the clients in the room.
+            </p>
+            <p>
+                The room name, such as <code>example-room</code> can be any URL-compatible string.
+            </p>
+        </section>
+
+        <section class="lang-section python">
+            <h3>Prerequisites</h3>
+
+            <ul>
+                <li>
+                    ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
+                </li>
+                <li>
+                    <a href="https://www.python.org">Python</a> version 3.7 or later.
+                </li>
+            </ul>
+
+            <h3>An example server</h3>
+
+            <p>
+                Create a file named <code>quickstart-server.py</code> with the following contents:
+            </p>
+
+            <div class="code-windows">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-title">quickstart-server.py</span>
+                    </div>
+                    <pre><code class="language-python">import sys
+
+def on_receive(data: str):
+    # Messages logged to stdout are sent to the client via the websocket
+    print("Hello from the server")
+    # Messages logged to stderr are not sent
+    print("Received websocket data:", data, file=sys.stderr)
+
+# Messages are received by reading lines from stdin
+for line in sys.stdin:
+    on_receive(line.strip())</code></pre>
+                </div>
+
+                <p>Start the server by wrapping Python in ScaleSocket:</p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-bash">$ scalesocket python -- quickstart-server.py
+[INFO] listening at 0.0.0.0:9000</code></pre>
+                </div>
+
+                <p>
+                Then connect as many clients as you want to a room at <code>localhost:9000/room-name</code>.
+                For example, using <a href="https://github.com/websockets/wscat">wscat</a>:
+                </p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-crmsh">$ npm install -g wscat
+added 9 packages in 142ms
+
+$ wscat -c "ws://localhost:9000/example-room"
+Connected (press CTRL+C to quit)
+&gt; Hello world
+&lt; Hello from the server</code></pre>
+                </div>
+            </div>
+
+            <p>
+                With default options, anything logged to stdout will be sent to the clients in the room.
+            </p>
+            <p>
+                The room name, such as <code>example-room</code> can be any URL-compatible string.
+            </p>
+        </section>
 
         <br />
         <br />
