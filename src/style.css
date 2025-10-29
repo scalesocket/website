@@ -100,6 +100,7 @@ body > header h1 {
     }
     .pills > div {
         width: 33%;
+        text-align: center;
     }
 }
 
