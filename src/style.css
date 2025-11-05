@@ -196,3 +196,22 @@ body > main > pre {
 #lang-bash:checked ~ .lang-section.bash {
     display: block;
 }
+
+figure {
+    max-width: 100%;
+    width: fit-content;
+    max-width: min(600px, 100%);
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 0.5rem;
+    background: #ffffff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+figure img {
+    width: 100%;
+    height: auto;
+    display: block;
+}

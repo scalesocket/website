@@ -5,5 +5,9 @@
   pretty_urls = true
 
 [[redirects]]
+  from = "man/examples/*"
+  to = "/examples/:splat"
+
+[[redirects]]
   from = "/man/*"
   to = "/docs/:splat"

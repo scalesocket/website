@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>ScaleSocket - Examples - Chat</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+        <link
+            rel="stylesheet"
+            href="https://cdn.simplecss.org/simple.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/styles/atom-one-dark.min.css"
+        />
+        <link rel="stylesheet" href="/utils.css" />
+        <link rel="stylesheet" href="/style.css" />
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <a href="/" class="header-logo">
+                    <img src="/assets/image.svg" alt="ScaleSocket" />
+                </a>
+                <a href="/index.html">Home</a>
+                <a href="/docs/" class="active">Documentation</a>
+                <a href="/download/">Download</a>
+                <a
+                    href="https://github.com/scalesocket/scalesocket"
+                    class="header-logo header-logo-small ml"
+                >
+                    <img
+                        src="/assets/github-mark.svg"
+                        alt="GitHub logo"
+                        class="pr-1"
+                    />
+                    GitHub
+                </a>
+            </nav>
+
+            <div>
+                <h1>Examples</h1>
+
+                <p>
+                   <a href="/docs/">&larr; Back</a>
+                </p>
+            </div>
+        </header>
+
+        <main>
+
+        <h2 class="text-teal">Simple chat website.</h2>
+
+       <p>
+           In this example we implement a naive chat website.
+           It demonstrates the basic usage and versatility of ScaleSocket.
+       </p>
+
+        <figure>
+          <img src="/examples/chat-screenshot.png" />
+
+          <figcaption>
+            What the example chat website looks like.
+          </figcaption>
+        </figure>
+
+        <section>
+            <h3>Prerequisites</h3>
+
+            <ul>
+                <li>
+                    ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
+                </li>
+                <li>
+                    <a href="https://en.wikipedia.org/wiki/Cat_(Unix)">cat</a> (built-in on Linux and macOS).
+                </li>
+            </ul>
+
+            <h3>Front end</h3>
+
+            <p>
+                Create a directory named <code>public</code> and within it, a file named <code>index.html</code> with the following contents:
+            </p>
+
+            <div class="code-windows">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-title">public/index.html</span>
+                    </div>
+                    <pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Chat Example using ScaleSocket&lt;/title&gt;
+        &lt;meta charset="utf-8" /&gt;
+        &lt;link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /&gt;
+    &lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;
+    &lt;p&gt;
+        Rooms: &lt;a href="?room=room1"&gt;room1&lt;/a&gt;, &lt;a href="?room=room2"&gt;room2&lt;/a&gt;
+    &lt;/p&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+    &lt;textarea id="messages" readonly disabled rows="20"&gt;&lt;/textarea&gt;
+    &lt;input id="nick" placeholder="nickname" value="anonymous" /&gt;
+    &lt;input id="message" placeholder="connecting..." disabled /&gt;
+&lt;/main&gt;
+
+&lt;script&gt;
+    const $ = id =&gt; document.getElementById(id);
+    const sanitize = str =&gt; str.replace(/[^a-zA-Z0-9 ]/g, '');
+    const room = new URLSearchParams(location.search).get("room") || 'room1';
+    const protocol = location.protocol === "https:" ? "wss" : "ws"
+    const ws = new WebSocket(`${protocol}://${location.host}/${room}`);
+
+    ws.onmessage = e =&gt; {
+        const msg = JSON.parse(e.data);
+        if (msg.t === "Join") {
+            $("messages").value += `a participant joined the chat\n`;
+        } else if (msg.t === "Leave") {
+            $("messages").value += `a participant left the chat\n`;
+        } else {
+            $("messages").value += `&lt;${msg.nick}&gt; ${msg.text}\n`;
+        }
+        $("messages").scrollTop = $("messages").scrollHeight;
+    };
+
+    ws.onopen = () =&gt; {
+        $("messages").value = `Connected to ${room}\n`;
+        $("message").placeholder = "type message...";
+        $("message").disabled = false;
+        $("message").focus();
+    };
+
+    $("message").onkeyup = e =&gt; {
+        if (e.key === 'Enter' && e.target.value.trim()) {
+            const nick = sanitize($("nick").value) || "anonymous";
+            const text = sanitize(e.target.value);
+            if (text) {
+                ws.send(JSON.stringify({ nick, text }));
+                e.target.value = "";
+            }
+        }
+    };
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+
+            </div>
+
+
+            <h3>Back end</h3>
+
+            <p>
+                We'll use the existing <code>cat</code> binary as our back end.
+                It's only purpose is to echo back whatever it receives to all clients.
+            </p>
+
+            <div class="code-windows">
+                <p>Start the server by wrapping <code>cat</code> in ScaleSocket. Scalesocket will also serve the static HTML.</p>
+
+                <div class="code-window terminal">
+                    <div class="window-header">
+                        <span class="window-title">terminal</span>
+                    </div>
+                    <pre><code class="language-bash">$ scalesocket --json --staticdir public/ cat
+[INFO] listening at 0.0.0.0:9000</code></pre>
+                </div>
+            </div>
+
+            <p>Then open <code>http://localhost:9000/</code> in your browser. You should see a working chat interface.</p>
+            <p>Try opening multiple browser tabs to connect to the same room multiple times.</p>
+
+            <h3>How does it work?</h3>
+
+            <p>
+                The HTML frontend connects to the ScaleSocket server using websockets. The backend spins up a new <code>cat</code> process.
+            </p>
+
+            <p>
+                When the frontend sends a chat message, ScaleSocket passes it directly to the <i>stdin</i> of <code>cat</code>.
+            </p>
+
+            <p>
+                Since <code>cat</code> echoes all input it receives, the reply to <i>stdout</i> is the message itself, which ScaleSocket sends back to all connected clients.
+            </p>
+
+            <p>
+                When <code>--json</code> is passed as an argument to ScaleSocket, it validates the websocket input to be JSON formatted objects.
+                Additionally, it will send <code>{t:"Join", _id:1234}</code> events when new clients join.
+            </p>
+        </section>
+
+        <h2 class="text-teal">Next.</h2>
+
+        <ul>
+            <li>
+                <a href="/docs/usage.html">Usage</a>
+            </li>
+            <li>
+                <a href="/docs/advanced-usage.html">Advanced usage</a>
+            </li>
+            <li>
+                <a href="/docs/cli.html">Command-line reference</a>
+            </li>
+        </ul>
+
+        <br />
+        <br />
+        <br />
+        <br />
+
+
+        </main>
+
+        <script>
+            hljs.highlightAll();
+        </script>
+    </body>
+</html>
