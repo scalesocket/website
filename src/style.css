@@ -108,6 +108,16 @@ body > main > pre {
     font-size: 0.8rem;
 }
 
+.code-figure {
+    background-color: unset;
+    padding: 0;
+    border: 0;
+}
+
+.code-figure pre {
+   font-size: 0.8rem;
+}
+
 .code-windows {
     display: flex;
     flex-direction: column;

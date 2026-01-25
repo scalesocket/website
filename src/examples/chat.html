@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>ScaleSocket - Examples - Chat</title>
+        <title>ScaleSocket - Examples - Simple websocket chat using cat</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -19,6 +19,7 @@
         <link rel="stylesheet" href="/style.css" />
         <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/highlight.min.js"></script>
         <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/crmsh.min.js"></script>
+        <script src="https://unpkg.com/@highlightjs/cdn-assets@11.10.0/languages/dockerfile.min.js"></script>
     </head>
     <body>
         <header>
@@ -53,37 +54,50 @@
 
         <main>
 
-        <h2 class="text-teal">Simple chat website.</h2>
+        <h2 class="text-teal">Simple websocket chat using cat.</h2>
 
        <p>
-           In this example we implement a naive chat website.
-           It demonstrates the basic usage and versatility of ScaleSocket.
+           In this example we use <a href="https://en.wikipedia.org/wiki/Cat_(Unix)">cat</a> as the back end for ScaleSocket.
+           The result is a naive chat website that uses websockets.
        </p>
 
         <figure>
           <img src="/examples/chat-screenshot.png" />
 
           <figcaption>
-            What the example chat website looks like.
+            What the chat example looks like.
           </figcaption>
         </figure>
 
         <section>
-            <h3>Prerequisites</h3>
+            <h3>Running the example</h3>
 
-            <ul>
-                <li>
-                    ScaleSocket, installed using one of the <a href="/download/">installation methods</a>.
-                </li>
-                <li>
-                    <a href="https://en.wikipedia.org/wiki/Cat_(Unix)">cat</a> (built-in on Linux and macOS).
-                </li>
-            </ul>
+            <p>
+                Prerequisites:
+
+                <ul>
+                    <li>
+                        <a href="https://www.docker.com/products/docker-desktop/">Docker desktop</a>
+                    </li>
+                </ul>
+            </p>
+
+            <p>
+                You can get the source code and run this example with:
+
+                <div class="code-figure">
+                    <pre class="code-figure"><code class="language-bash hljs">git clone git@github.com:scalesocket/scalesocket.git
+cd scalesocket/examples
+docker compose up --build chat
+open http://localhost:9000/</code></pre>
+                </div>
+
+            </p>
 
             <h3>Front end</h3>
 
             <p>
-                Create a directory named <code>public</code> and within it, a file named <code>index.html</code> with the following contents:
+                We'll create <code>index.html</code> with the following contents:
             </p>
 
             <div class="code-windows">
@@ -106,7 +120,7 @@
 &lt;/header&gt;
 
 &lt;main&gt;
-    &lt;textarea id="messages" readonly disabled rows="20"&gt;&lt;/textarea&gt;
+    &lt;textarea id="messages" readonly rows="20"&gt;&lt;/textarea&gt;
     &lt;input id="nick" placeholder="nickname" value="anonymous" /&gt;
     &lt;input id="message" placeholder="connecting..." disabled /&gt;
 &lt;/main&gt;
@@ -162,25 +176,59 @@
                 It's only purpose is to echo back whatever it receives to all clients.
             </p>
 
+            <p>
+                We'll use a <code>Dockerfile</code> with the following contents:
+            </p>
+
             <div class="code-windows">
-                <p>Start the server by wrapping <code>cat</code> in ScaleSocket. Scalesocket will also serve the static HTML.</p>
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-title">Dockerfile</span>
+                    </div>
+                    <pre><code class="language-dockerfile"># syntax=docker/dockerfile:1.2
+FROM scalesocket/scalesocket:latest
+COPY index.html /var/www/public/index.html
+CMD scalesocket\
+    --json\
+    --staticdir /var/www/public/\
+    cat</code></pre>
+                </div>
+            </div>
+
+            <p>
+                The <code>scalesocket/scalesocket:latest</code> docker image is based on Alpine linux.
+            </p>
+
+            <p>
+                We start cat using <code>scalesocket</code> in binary mode.
+                Scalesocket will also serve the static HTML.
+            </p>
+
+            <p>To clone and run the complete example, do:</p>
+
+            <div class="code-windows">
 
                 <div class="code-window terminal">
                     <div class="window-header">
                         <span class="window-title">terminal</span>
                     </div>
-                    <pre><code class="language-bash">$ scalesocket --json --staticdir public/ cat
-[INFO] listening at 0.0.0.0:9000</code></pre>
+                    <pre><code class="language-bash">git clone git@github.com:scalesocket/scalesocket.git
+cd scalesocket/examples
+docker compose up --build chat</code></pre>
                 </div>
             </div>
 
-            <p>Then open <code>http://localhost:9000/</code> in your browser. You should see a working chat interface.</p>
+            <p>
+                Then open <code>http://localhost:9000/</code> in your browser.
+                You should see a working chat interface.
+            </p>
             <p>Try opening multiple browser tabs to connect to the same room multiple times.</p>
 
             <h3>How does it work?</h3>
 
             <p>
-                The HTML frontend connects to the ScaleSocket server using websockets. The backend spins up a new <code>cat</code> process.
+                The HTML frontend connects to the ScaleSocket server at <code>ws://localhost:9000/room1</code> using websockets.
+                The back end spins up a new <code>cat</code> process for the room.
             </p>
 
             <p>
