@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>ScaleSocket - Examples - Simple websocket chat using cat</title>
+        <title>ScaleSocket - Examples - Streaming a terminal to the browser</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
@@ -54,20 +54,24 @@
 
         <main>
 
-        <h2 class="text-teal">Simple websocket chat using cat.</h2>
+        <h2 class="text-teal">Streaming a terminal to the browser.</h2>
 
        <p>
-           In this example we use <a href="https://en.wikipedia.org/wiki/Cat_(Unix)">cat</a> as the back end for ScaleSocket.
-           The result is a naive chat website that uses websockets.
+           In this example, we use <a href="https://en.wikipedia.org/wiki/Vim_(text_editor)">Vim</a> as a back end for ScaleSocket.
+           We stream the <a href="https://en.wikipedia.org/wiki/Text-based_user_interface">TUI</a> to the browser using <a href="https://xtermjs.org/">Xterm.js</a> and websockets.
+           The result is that multiple users can interact with the same Vim instance using the browser.
        </p>
 
+
         <figure>
-          <img src="/examples/chat-screenshot.png" />
+          <img src="/examples/terminal-screenshot.png" />
 
           <figcaption>
-            What the chat example looks like.
+            What the terminal streaming example looks like.
           </figcaption>
         </figure>
+
+
 
         <section>
             <h3>Running the example</h3>
@@ -88,7 +92,7 @@
                 <div class="code-figure">
                     <pre class="code-figure"><code class="language-bash hljs">git clone git@github.com:scalesocket/scalesocket.git
 cd scalesocket/examples
-docker compose up --build chat
+docker compose up --build terminal
 open http://localhost:9000/</code></pre>
                 </div>
 
@@ -108,59 +112,50 @@ open http://localhost:9000/</code></pre>
                     <pre><code class="language-html">&lt;!doctype html&gt;
 &lt;html&gt;
     &lt;head&gt;
-        &lt;title&gt;Chat Example using ScaleSocket&lt;/title&gt;
-        &lt;meta charset="utf-8" /&gt;
-        &lt;link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" /&gt;
-    &lt;/head&gt;
+    &lt;title&gt;Terminal streaming example using ScaleSocket&lt;/title&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.simplecss.org/simple.min.css&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/@xterm/addon-attach@0.12.0/lib/addon-attach.min.js &quot;&gt;&lt;/script&gt;
+    &lt;link href=&quot;https://cdn.jsdelivr.net/npm/xterm@5.3.0/css/xterm.min.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;style&gt;
+        html, body { width: 100vw; overflow: hidden; }
+    &lt;/style&gt;
+&lt;/head&gt;
 &lt;body&gt;
 &lt;header&gt;
     &lt;p&gt;
-        Rooms: &lt;a href="?room=room1"&gt;room1&lt;/a&gt;, &lt;a href="?room=room2"&gt;room2&lt;/a&gt;
+        Rooms: &lt;a href=&quot;?room=room1&quot;&gt;room1&lt;/a&gt;, &lt;a href=&quot;?room=room2&quot;&gt;room2&lt;/a&gt;
     &lt;/p&gt;
 &lt;/header&gt;
 
 &lt;main&gt;
-    &lt;textarea id="messages" readonly rows="20"&gt;&lt;/textarea&gt;
-    &lt;input id="nick" placeholder="nickname" value="anonymous" /&gt;
-    &lt;input id="message" placeholder="connecting..." disabled /&gt;
+    &lt;div id=&quot;terminal&quot;&gt;&lt;/div&gt;
+    &lt;p&gt;
+        This example streams the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vim_(text_editor)&quot;&gt;Vim&lt;/a&gt;
+        command-line text editor to the browser.
+    &lt;/p&gt;
+    &lt;p&gt;
+        Try writing &lt;code&gt;ihello world&amp;lt;esc&amp;gt;&lt;/code&gt;.
+        Open multiple tabs to connect multiple times to the same room.
+    &lt;/p&gt;
 &lt;/main&gt;
 
 &lt;script&gt;
     const $ = id =&gt; document.getElementById(id);
-    const sanitize = str =&gt; str.replace(/[^a-zA-Z0-9 ]/g, '');
-    const room = new URLSearchParams(location.search).get("room") || 'room1';
-    const protocol = location.protocol === "https:" ? "wss" : "ws"
+    const room = new URLSearchParams(location.search).get(&quot;room&quot;) || 'room1';
+    const protocol = location.protocol === &quot;https:&quot; ? &quot;wss&quot; : &quot;ws&quot;
     const ws = new WebSocket(`${protocol}://${location.host}/${room}`);
 
-    ws.onmessage = e =&gt; {
-        const msg = JSON.parse(e.data);
-        if (msg.t === "Join") {
-            $("messages").value += `a participant joined the chat\n`;
-        } else if (msg.t === "Leave") {
-            $("messages").value += `a participant left the chat\n`;
-        } else {
-            $("messages").value += `&lt;${msg.nick}&gt; ${msg.text}\n`;
-        }
-        $("messages").scrollTop = $("messages").scrollHeight;
-    };
+    const term = new Terminal();
+    term.loadAddon(new AttachAddon.AttachAddon(ws));
+    term.open(document.getElementById('terminal'));
 
     ws.onopen = () =&gt; {
-        $("messages").value = `Connected to ${room}\n`;
-        $("message").placeholder = "type message...";
-        $("message").disabled = false;
-        $("message").focus();
-    };
-
-    $("message").onkeyup = e =&gt; {
-        if (e.key === 'Enter' && e.target.value.trim()) {
-            const nick = sanitize($("nick").value) || "anonymous";
-            const text = sanitize(e.target.value);
-            if (text) {
-                ws.send(JSON.stringify({ nick, text }));
-                e.target.value = "";
-            }
-        }
-    };
+        term.focus();
+        // ask `vim` to redraw the screen
+        ws.send("\x1b:redraw!\n");
+    }
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
@@ -172,8 +167,8 @@ open http://localhost:9000/</code></pre>
             <h3>Back end</h3>
 
             <p>
-                We'll use the existing <code>cat</code> binary as our back end.
-                It's only purpose is to echo back whatever it receives to all clients.
+                We'll use the <code>vim</code> binary as our back end.
+                Additionally, we'll wrap <code>vim</code> with <code>unbuffer</code> to expose a pseudo-terminal for improved compatibility.
             </p>
 
             <p>
@@ -187,20 +182,28 @@ open http://localhost:9000/</code></pre>
                     </div>
                     <pre><code class="language-dockerfile"># syntax=docker/dockerfile:1.2
 FROM scalesocket/scalesocket:latest
+RUN apk add --no-cache\
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/main\
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing\
+    expect vim
+
 COPY index.html /var/www/public/index.html
+
 CMD scalesocket\
-    --json\
+    --binary\
     --staticdir /var/www/public/\
-    cat</code></pre>
+    unbuffer -- -p vim
+</code></pre>
                 </div>
             </div>
 
             <p>
                 The <code>scalesocket/scalesocket:latest</code> docker image is based on Alpine linux.
+                We use <code>apk</code> to install unbuffer (included in expect) and vim.
             </p>
 
             <p>
-                We start cat using <code>scalesocket</code> in binary mode.
+                We start vim using <code>scalesocket</code> in binary mode.
                 Scalesocket will also serve the static HTML.
             </p>
 
@@ -214,42 +217,42 @@ CMD scalesocket\
                     </div>
                     <pre><code class="language-bash">git clone git@github.com:scalesocket/scalesocket.git
 cd scalesocket/examples
-docker compose up --build chat</code></pre>
+docker compose up --build terminal</code></pre>
                 </div>
             </div>
 
             <p>
                 Then open <code>http://localhost:9000/</code> in your browser.
-                You should see a working chat interface.
+                You should see a working terminal interface running Vim.
             </p>
-            <p>Try opening multiple browser tabs to connect to the same room multiple times.</p>
+            <p>Try using <code>vim</code> and opening multiple browser tabs to connect to the same room multiple times.</p>
 
             <h3>How does it work?</h3>
 
             <p>
                 The HTML frontend connects to the ScaleSocket server at <code>ws://localhost:9000/room1</code> using websockets.
-                The back end spins up a new <code>cat</code> process for the room.
+                The back end spins up a new <code>vim</code> process for the room.
             </p>
 
             <p>
-                When the frontend sends a chat message, ScaleSocket passes it directly to the <i>stdin</i> of <code>cat</code>.
             </p>
 
             <p>
-                Since <code>cat</code> echoes all input it receives, the reply to <i>stdout</i> is the message itself, which ScaleSocket sends back to all connected clients.
+                The frontend uses <a href="https://www.npmjs.com/package/@xterm/xterm">Xterm.js</a> and <a href="https://www.npmjs.com/package/@xterm/addon-attach">xterm-addon-attach</a> to hook up a in-browser terminal to the websocket.
+                When the frontend sends a key press, ScaleSocket passes it directly to the <i>stdin</i> of <code>vim</code>.
             </p>
 
             <p>
-                When <code>--json</code> is passed as an argument to ScaleSocket, it validates the websocket input to be JSON formatted objects.
-                Additionally, it will send <code>{t:"Join", _id:1234}</code> events when new clients join.
+                When the <code>vim</code> TUI redraws the screen, the <i>stdout</i> is sent to all connected clients.
             </p>
+
         </section>
 
         <h2 class="text-teal">Next.</h2>
 
         <ul>
             <li>
-                <a href="/examples/terminal.html">Streaming a terminal to the browser</a>
+                <a href="/examples/chat.html">Simple websocket chat using cat</a>
             </li>
             <li>
                 <a href="/docs/usage.html">Usage</a>
