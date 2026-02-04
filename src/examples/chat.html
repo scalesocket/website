@@ -94,6 +94,18 @@ open http://localhost:9000/</code></pre>
 
             </p>
 
+            <h3>Architecture overview</h3>
+
+            <p>
+                This example demonstrates a minimal chat application with three components:
+            </p>
+
+            <ul>
+                <li><strong>cat</strong> &ndash; echoes all input back to stdout, acting as a broadcast relay</li>
+                <li><strong>HTML/JS frontend</strong> &ndash; simple chat interface with JSON messaging</li>
+                <li><strong>ScaleSocket</strong> &ndash; handles websocket connections and JSON validation</li>
+            </ul>
+
             <h3>Front end</h3>
 
             <p>
@@ -248,6 +260,9 @@ docker compose up --build chat</code></pre>
         <h2 class="text-teal">Next.</h2>
 
         <ul>
+            <li>
+                <a href="/examples/whiteboard.html">Real-time collaborative whiteboard</a>
+            </li>
             <li>
                 <a href="/examples/terminal.html">Streaming a terminal to the browser</a>
             </li>

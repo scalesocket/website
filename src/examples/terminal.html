@@ -98,6 +98,18 @@ open http://localhost:9000/</code></pre>
 
             </p>
 
+            <h3>Architecture overview</h3>
+
+            <p>
+                This example demonstrates streaming a TUI application to the browser:
+            </p>
+
+            <ul>
+                <li><strong>Vim</strong> &ndash; the text editor running as a back end process</li>
+                <li><strong>Xterm.js frontend</strong> &ndash; renders the terminal in the browser</li>
+                <li><strong>ScaleSocket</strong> &ndash; bridges websockets to stdin/stdout in binary mode</li>
+            </ul>
+
             <h3>Front end</h3>
 
             <p>
@@ -251,6 +263,9 @@ docker compose up --build terminal</code></pre>
         <h2 class="text-teal">Next.</h2>
 
         <ul>
+            <li>
+                <a href="/examples/whiteboard.html">Real-time collaborative whiteboard</a>
+            </li>
             <li>
                 <a href="/examples/chat.html">Simple websocket chat using cat</a>
             </li>
