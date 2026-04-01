@@ -157,7 +157,7 @@ createInterface({ input: process.stdin })
 
             <p>
                 The server reads JSON messages from <i>stdin</i> and writes responses to <i>stdout</i>.
-                ScaleSocket handles the websocket connections &mdash; the server just focuses on state management.
+                ScaleSocket handles the websocket connections; the node server handles state management.
             </p>
 
             <h3>Front end</h3>
@@ -185,9 +185,13 @@ export class Whiteboard {
     this.ws = ws;
     this.items = {};
 
+    // Canvas event handlers
     this.viewport.on('pointermove', (e) => this.onPointerMove(e));
     this.viewport.on('pointerup', (e) => this.onPointerUp(e));
+
+    // WebSocket handlers
     this.ws.onmessage = (e) => this.onMessage(e);
+
     // ...
   }
 
