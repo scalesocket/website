@@ -129,6 +129,7 @@ const state = {
 }
 
 const send = (data: Object) => {
+  // Messages logged to stdout are sent to the client via the websocket
   console.log(JSON.stringify(data))
 }
 
